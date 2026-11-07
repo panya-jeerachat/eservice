@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>E-Service คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม</title>
+<meta name="description" content="ช่องทางออนไลน์สำหรับขอรับบริการและติดตามสถานะงานบริการ คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม">
+<link rel="preconnect" href="https://eng.msu.ac.th" crossorigin>
+<link rel="stylesheet" href="https://eng.msu.ac.th/dwms/fonts/mornamchi.css">
+<link rel="stylesheet" href="eservice.css">
+<style>
+/* ══ โทนสีแบบ full color (ฟ้า · ฟ้าอมเขียว · ส้ม · ม่วง · เขียว · ทอง) ══ */
+:root{
+  --b1:#42A5F5;--b2:#1565C0;--t1:#26C6DA;--t2:#00838F;--o1:#FFB74D;--o2:#EF6C00;--p1:#9575CD;--p2:#5E35B1;--g1:#66BB6A;--g2:#2E7D32;--y1:#FFD54F;--y2:#F9A825;
+  --navy:#12305A;--sky:#EAF4FF;
+}
+body{background:linear-gradient(180deg,#EAF4FF 0%,#F4F8FE 420px,#F6F8FC 100%)}
+.wrap{max-width:none;padding:0 clamp(14px,2.6vw,40px)}
+/* ── แถบบน ── */
+.top{position:sticky;top:0;z-index:40;background:linear-gradient(110deg,var(--maroon) 0%,#5C1A3A 55%,#3A2A6B 100%);color:#fff;box-shadow:0 6px 22px rgba(18,48,90,.18)}
+.top .wrap{display:flex;align-items:center;gap:10px;min-height:66px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto;color:#fff;text-decoration:none;min-width:0}
+.brand .lg{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:21px;flex:none}
+.brand b{display:block;font-size:18px;line-height:1.2}.brand small{display:block;font-size:12.5px;opacity:.85}
+.nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.nav .btn{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28);color:#fff;padding:8px 12px;font-size:14.5px}
+.nav .btn:hover{background:rgba(255,255,255,.22);border-color:#fff}
+.nav .btn.cta{background:#fff;color:var(--maroon);border-color:#fff}
+.split{display:inline-flex}.split .btn:first-child{border-radius:10px 0 0 10px}.split .btn:last-child{border-radius:0 10px 10px 0;border-left:0;padding:8px 9px}
+.upd{font-size:12px;opacity:.9;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:50%;background:#34D399;box-shadow:0 0 0 3px rgba(52,211,153,.3)}
+.spin{animation:spin 1s linear infinite;display:inline-block}@keyframes spin{to{transform:rotate(360deg)}}
+/* ── ส่วนหัวย่อ ── */
+.hero{padding:20px 0 6px}
+.hero .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.hero h1{font-size:clamp(22px,2.6vw,32px);color:var(--navy)}
+.hero p{margin:4px 0 0;color:#4A5D78;font-size:15px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #DCE8F7;border-radius:999px;padding:6px 12px;font-size:13.5px;color:#334A66;box-shadow:0 4px 12px rgba(18,48,90,.05)}
+.chip i{width:9px;height:9px;border-radius:50%;display:inline-block}.chip b{color:var(--navy);font-size:15px}
+/* ── การ์ดแบบ glass ── */
+section{margin-top:22px}
+.box{background:#fff;border:1px solid #E1ECF8;border-radius:20px;box-shadow:0 10px 30px rgba(18,48,90,.07);padding:18px clamp(14px,1.6vw,24px)}
+.sh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.sh .ttl{display:flex;gap:12px;align-items:center}
+.sh .ic{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;flex:none;box-shadow:0 8px 18px rgba(21,101,192,.25)}
+.sh h2{font-size:20px;color:var(--navy)}.sh p{margin:2px 0 0;color:#5B6E88;font-size:13.5px}
+.g-blue{background:linear-gradient(135deg,var(--b1),var(--b2))}.g-teal{background:linear-gradient(135deg,var(--t1),var(--t2))}
+.g-orange{background:linear-gradient(135deg,var(--o1),var(--o2))}.g-purple{background:linear-gradient(135deg,var(--p1),var(--p2))}
+.g-green{background:linear-gradient(135deg,var(--g1),var(--g2))}.g-gold{background:linear-gradient(135deg,var(--y1),var(--y2))}
+.filters{display:flex;gap:8px;flex-wrap:wrap}.filters .in{width:auto;padding:8px 10px;font-size:14.5px;border-color:#D3E1F2;border-radius:10px}
+.live{display:inline-flex;align-items:center;gap:6px;background:#E8F7EE;color:#1B7F45;border:1px solid #BFE6CF;border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700}
+/* ── ทะเบียนงาน ── */
+.search{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.search .in{flex:1 1 320px;border-color:#CFE0F4;border-radius:12px}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:14.5px}
+th{text-align:left;color:#5B6E88;font-weight:700;font-size:13px;border-bottom:2px solid #E6EEF8;padding:9px 10px;white-space:nowrap;background:#F7FAFE}
+th:first-child{border-radius:10px 0 0 0}th:last-child{border-radius:0 10px 0 0}
+td{border-bottom:1px solid #EEF3F9;padding:10px;vertical-align:top}
+tr.r{cursor:pointer;transition:background .12s}tr.r:hover td{background:#F3F8FF}
+.jn{font-weight:700;color:var(--b2);white-space:nowrap}
+.scroll{overflow-x:auto}
+.pager{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;font-size:14px;color:#5B6E88;flex-wrap:wrap}
+.age{display:inline-block;border-radius:999px;padding:1px 8px;font-size:11.5px;font-weight:700;margin-left:4px}
+.age.warn{background:#FFF3E0;color:#B45309}.age.late{background:#FDECEA;color:#C62828}
+/* ── เส้นทางการกำกับติดตาม 3D ── */
+.wf-cards{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;position:relative;z-index:2}
+.wcard{background:#fff;border:1.5px solid #E3ECF7;border-radius:16px;padding:20px 12px 12px;text-align:center;cursor:pointer;position:relative;transition:transform .2s,box-shadow .2s,border-color .2s}
+.wcard:hover,.wcard.on{transform:translateY(-4px);box-shadow:0 14px 30px rgba(18,48,90,.14);border-color:var(--c2)}
+.wcard .badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);color:#fff;font-size:12px;font-weight:700;border-radius:999px;padding:2px 11px;white-space:nowrap;background:linear-gradient(135deg,var(--c1),var(--c2))}
+.wcard h3{font-size:15px;color:var(--navy);line-height:1.35}.wcard .sub{font-size:12px;color:#7A8BA3;margin:2px 0 8px}
+.wcard .big{font-size:26px;font-weight:700;color:var(--c2);line-height:1.1}.wcard .big small{font-size:14px}
+.wcard .meta{font-size:12.5px;color:#4A5D78;line-height:1.5;margin-top:4px}
+.wcard .more{display:inline-block;margin-top:8px;font-size:12.5px;font-weight:700;color:var(--c2);text-decoration:underline}
+.s1{--c1:var(--b1);--c2:var(--b2)}.s2{--c1:var(--t1);--c2:var(--t2)}.s3{--c1:var(--o1);--c2:var(--o2)}.s4{--c1:var(--p1);--c2:var(--p2)}.s5{--c1:var(--g1);--c2:var(--g2)}.s6{--c1:var(--y1);--c2:var(--y2)}
+.stage{position:relative;height:280px;margin-top:-6px;border-radius:16px;background:linear-gradient(180deg,rgba(234,244,255,0) 0%,#EEF5FE 60%,#E6F0FD 100%);overflow:hidden}
+.stage svg{position:absolute;inset:0;width:100%;height:100%}
+.stem{position:absolute;top:0;width:0;border-left:1.5px dashed #9EB8DA}
+.cube{position:absolute;width:62px;height:62px;margin-left:-31px;margin-top:-80px;transform-style:preserve-3d;cursor:pointer;animation:bob 3.2s ease-in-out infinite}
+.cube .in3{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(-22deg) rotateY(-38deg);transition:transform .3s}
+.cube:hover .in3{transform:rotateX(-22deg) rotateY(-38deg) scale(1.12)}
+.cube .f{position:absolute;width:62px;height:62px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#fff;border-radius:6px;backface-visibility:hidden}
+.cube .fr{transform:translateZ(31px);background:linear-gradient(135deg,var(--c1),var(--c2))}
+.cube .rt{transform:rotateY(90deg) translateZ(31px);background:var(--c2);filter:brightness(.82)}
+.cube .tp{transform:rotateX(90deg) translateZ(31px);background:var(--c1);filter:brightness(1.12)}
+.cube .sh2{position:absolute;left:4px;right:4px;bottom:-26px;height:12px;border-radius:50%;background:rgba(18,48,90,.16);filter:blur(3px);transform:none}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -7px}}
+.cube:nth-of-type(2){animation-delay:.3s}.cube:nth-of-type(3){animation-delay:.6s}.cube:nth-of-type(4){animation-delay:.9s}.cube:nth-of-type(5){animation-delay:1.2s}.cube:nth-of-type(6){animation-delay:1.5s}
+.paused .cube{animation-play-state:paused}
+.wf-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;font-size:13px;color:#5B6E88;flex-wrap:wrap}
+.ring{display:inline-block;width:12px;height:12px;border:2.5px solid #F43F5E;border-radius:50%;vertical-align:-2px;margin-right:6px}
+/* ── แดชบอร์ดผู้บริหาร ── */
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{border:1px solid #D3E1F2;background:#fff;border-radius:999px;padding:6px 13px;font-size:13.5px;font-weight:700;color:#4A5D78;cursor:pointer}
+.tab.on{background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff;border-color:transparent;box-shadow:0 6px 14px rgba(21,101,192,.3)}
+.trend{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:clamp(4px,.7vw,12px);align-items:end;height:310px;padding-top:22px;position:relative;
+  background:repeating-linear-gradient(180deg,transparent 0 57px,#EEF3F9 57px 58px)}
+.tb{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px;min-width:0}
+.tb .bar{width:100%;max-width:64px;border-radius:9px 9px 4px 4px;background:linear-gradient(180deg,#64B5F6,#1E88E5);min-height:3px;box-shadow:0 6px 14px rgba(30,136,229,.22);transition:height .5s}
+.tb.peak .bar{background:linear-gradient(180deg,#FFCA6B,#F57C00);box-shadow:0 6px 14px rgba(245,124,0,.28)}
+.tb.last .bar{background:linear-gradient(180deg,#81C784,#2E9E4F)}
+.tb em{font-style:normal;font-size:12.5px;font-weight:700;color:var(--navy)}
+.tb span{font-size:11.5px;color:#7A8BA3;text-align:center;line-height:1.25}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:#5B6E88;margin-top:16px;padding-top:10px;border-top:1px dashed #E3EAF3}.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:18px}
+.vals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.val{border-radius:14px;padding:12px 14px;border:1px solid #E1ECF8;border-left:5px solid var(--b2)}
+.val .l{font-size:13px;color:#4A5D78;font-weight:700}.val .v{font-size:26px;font-weight:700;color:var(--b2);line-height:1.15}.val .v small{font-size:13px;color:#7A8BA3}
+.val .s{font-size:12px;color:#7A8BA3}
+.val.t{border-left-color:var(--t2)}.val.t .v{color:var(--t2)}.val.n{border-left-color:var(--navy);background:linear-gradient(135deg,#F2F7FF,#E7F0FC)}.val.n .v{color:var(--navy)}
+.stack{height:30px;border-radius:999px;background:#EEF3F9;overflow:hidden;display:flex;margin:16px 0 6px}
+.stack i{display:flex;align-items:center;justify-content:flex-end;padding-right:10px;color:#fff;font-size:12.5px;font-weight:700;font-style:normal;white-space:nowrap}
+.gauge{display:flex;flex-direction:column;align-items:center;gap:6px}
+.gauge svg{width:200px;height:200px}
+.yrs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;align-items:end;background:#F7FAFE;border:1px solid #E6EEF8;border-radius:14px;padding:12px;margin-top:10px;width:100%}
+.yr{text-align:center;font-size:11.5px;color:#7A8BA3}.yr .c{height:64px;display:flex;align-items:flex-end;justify-content:center}
+.yr .c i{display:block;width:70%;max-width:38px;border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,#A5D6A7,#43A047)}
+.yr .c i.cur{background:linear-gradient(180deg,#69F0AE,#00C853);box-shadow:0 0 0 2px #00C853}
+.yr .c .no{width:70%;max-width:38px;height:22px;border:1.5px dashed #CFD8E3;border-radius:6px}
+.rank{display:flex;flex-direction:column;gap:12px}
+.rk .top2{display:flex;justify-content:space-between;gap:10px;font-size:14px}.rk b{color:var(--navy)}.rk .num{color:#1E4E8C;font-weight:700;font-size:13px;white-space:nowrap}
+.rk .bg{height:10px;background:#EEF3F9;border-radius:99px;overflow:hidden;margin-top:5px}.rk .bg i{display:block;height:100%;border-radius:99px}
+.ana{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.an{border-radius:14px;padding:14px;border:1px solid #E1ECF8;border-left:5px solid var(--c);background:linear-gradient(180deg,#fff,color-mix(in srgb,var(--c) 5%,#fff))}
+.an h4{margin:0 0 8px;font-size:15px;color:var(--c)}.an p{margin:0;font-size:14px;line-height:1.7;color:#334A66}
+.mtab td.n,.mtab th.n{text-align:right}.mtab tr.tot td{font-weight:700;background:#F2F7FF;border-top:2px solid #D3E1F2}
+/* ── แถบความพึงพอใจ (ท้ายหน้า) ── */
+.satbar{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1.5fr);gap:20px;align-items:center;border-radius:22px;padding:18px 24px;
+  background:linear-gradient(110deg,#FFB300 0%,#FFC93C 45%,#FFE08A 100%);box-shadow:0 14px 34px rgba(249,168,37,.35);color:#4A2B00}
+.satbar .score{font-size:50px;font-weight:700;line-height:1}.satbar .score small{font-size:18px;opacity:.75}
+.satbar h3{font-size:16px}.satbar .stars{color:#8D5A00;letter-spacing:3px}
+.satbar .meter{height:8px;background:rgba(255,255,255,.55);border-radius:99px;overflow:hidden;margin:6px 0 4px}.satbar .meter i{display:block;height:100%;background:#E65100}
+.satbar .dist{font-size:12.5px;opacity:.9}
+.vote{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.9);border-radius:16px;padding:10px 12px}
+.vote b{font-size:14px;white-space:nowrap}
+.vote .pick{display:flex;gap:2px}
+.vote .pick button{border:0;background:none;font-size:26px;line-height:1;cursor:pointer;color:#E8D3A0;padding:0 2px;transition:transform .12s}
+.vote .pick button.on{color:#F57C00}.vote .pick button:hover{transform:scale(1.15)}
+.vote .in{flex:1 1 200px;border-color:#F3D58A;border-radius:11px;padding:9px 11px;font-size:14.5px}
+.vote .send{background:linear-gradient(135deg,#8D4A00,#6B3500);color:#fff;border:0;border-radius:11px;padding:10px 16px;font-weight:700;cursor:pointer}
+.vote .msg{flex-basis:100%;font-size:13px}
+/* ── หน้าต่าง ── */
+.mbox{width:min(720px,100%)}
+.qrjob{display:flex;gap:16px;align-items:center;background:#F3F8FF;border:1px solid #DCE8F7;border-radius:14px;padding:12px;margin-top:14px}
+.qrjob img{width:120px;height:120px;border-radius:10px;background:#fff;border:1px solid #DCE8F7;flex:none}
+.tl{list-style:none;margin:12px 0 0;padding:0}
+.tl li{position:relative;padding:0 0 14px 28px}
+.tl li::before{content:"";position:absolute;left:6px;top:5px;width:12px;height:12px;border-radius:50%;background:#D1D9E4}
+.tl li::after{content:"";position:absolute;left:11px;top:19px;bottom:0;width:2px;background:#E3EAF3}
+.tl li:last-child::after{display:none}.tl li.on::before{background:linear-gradient(135deg,var(--b1),var(--b2))}
+.tl b{display:block;color:var(--navy)}.tl small{color:#7A8BA3}
+dl.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:0}
+dl.kv dt{color:#5B6E88;font-size:14px}dl.kv dd{margin:0;overflow-wrap:anywhere}
+.files a{display:inline-flex;align-items:center;gap:6px;background:#F3F8FF;border:1px solid #DCE8F7;border-radius:10px;padding:6px 10px;margin:4px 6px 0 0;text-decoration:none;color:var(--b2);font-size:14px;max-width:100%;overflow-wrap:anywhere}
+.way{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;text-decoration:none;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:13px 15px;margin:0 0 10px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.way:hover{border-color:var(--maroon);box-shadow:0 6px 18px rgba(20,24,32,.08)}
+.way.rec{border-color:#E4B9BF;background:#FCF4F5}
+.way .wi{font-size:22px;line-height:1.2}.way b{font-size:15.5px}.way em{font-style:normal;color:var(--maroon);font-size:12.5px;font-weight:700}
+.way small{display:block;color:var(--muted);font-size:13px;line-height:1.55;margin-top:2px}
+.jl{display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:260px;overflow:auto}
+.jl button{display:flex;justify-content:space-between;gap:10px;align-items:center;text-align:left;border:1px solid #E3ECF7;background:#F9FBFE;border-radius:10px;padding:8px 10px;cursor:pointer;font:inherit}
+.jl button:hover{border-color:var(--b2)}
+@media (max-width:1100px){ .wf-cards{grid-template-columns:repeat(3,minmax(0,1fr))} .stage{display:none} .ana{grid-template-columns:repeat(2,minmax(0,1fr))} .trend{grid-template-columns:repeat(14,minmax(0,1fr))} }
+@media (max-width:900px){ .grid2,.satbar{grid-template-columns:minmax(0,1fr)} .vals{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:620px){ .wf-cards{grid-template-columns:repeat(2,minmax(0,1fr))} .ana{grid-template-columns:minmax(0,1fr)} .trend{height:230px;background:none} .tb span{font-size:10px} .tb em{font-size:10.5px}
+  .nav .btn .t{display:none} .upd{display:none} .qrjob{flex-direction:column;text-align:center} }
+@media (prefers-reduced-motion:reduce){ .cube{animation:none} }
+</style>
+</head>
+<body data-title="หน้าหลัก">
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="lg" aria-hidden="true">🛠️</span><span><b data-cfg="appShort">E-Service</b><small data-cfg="faculty">คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม</small></span></a>
+    <span class="upd"><span class="dot"></span><span id="updTxt">กำลังโหลด…</span></span>
+    <nav class="nav" aria-label="เมนูหลัก">
+      <a class="btn" href="https://eng.msu.ac.th/">🏠 <span class="t">หน้าหลัก</span></a>
+      <a class="btn cta" href="request.html">📝 <span class="t">ขอรับบริการ</span></a>
+      <button class="btn" type="button" id="qrBtn">▣ <span class="t">QR Code</span></button>
+      <button class="btn" type="button" id="syncBtn" title="ซิงก์ข้อมูลล่าสุด">🔄 <span class="t">ซิงก์ข้อมูล</span></button>
+      <span class="split"><button class="btn" type="button" id="staffBtn">🔐 <span class="t">เข้าสู่ระบบเจ้าหน้าที่</span></button><button class="btn" type="button" id="staffWay" title="เลือกวิธีเข้าสู่ระบบ" aria-label="เลือกวิธีเข้าสู่ระบบ">▾</button></span>
+    </nav>
+  </div>
+</header>
+
+<div class="hero"><div class="wrap">
+  <div><h1 data-cfg="appName">E-Service คณะวิศวกรรมศาสตร์</h1><p>ขอรับบริการจากทุกฝ่ายของคณะ ระบบแจ้งผู้รับผิดชอบอัตโนมัติ ติดตามสถานะได้ทุกขั้นตอน ไม่ต้องเข้าสู่ระบบ</p></div>
+  <div class="chips" id="heroChips"></div>
+</div></div>
+
+<main class="wrap">
+  <div id="loadErr" class="err hide" style="margin-top:14px"></div>
+
+  <!-- ══ 1) ทะเบียนงานบริการ (บนสุด) ══ -->
+  <section id="registry" class="box">
+    <div class="sh"><div class="ttl"><span class="ic g-blue">📋</span><div><h2>ทะเบียนงานบริการ</h2><p id="regSub">ค้นหาเรื่องของท่าน แล้วคลิกเพื่อดูรายละเอียด สถานะ ไฟล์แนบ และ QR Code ติดตามผ่านมือถือ</p></div></div>
+      <div class="filters"><select class="in" id="rSt" aria-label="สถานะ"><option value="">ทุกสถานะ</option><option>รับเรื่องไว้ก่อน</option><option>อยู่ระหว่างดำเนินการ</option><option>สำเร็จ</option><option>ไม่สำเร็จ</option><option>ยกเลิก</option></select>
+        <select class="in" id="rDept" aria-label="ฝ่าย"><option value="">ทุกฝ่าย</option></select><select class="in" id="rFy" aria-label="ปีงบประมาณ"><option value="">ทุกปีงบประมาณ</option></select></div></div>
+    <div class="search"><input class="in" id="rq" type="search" placeholder="🔎 ค้นหาเลขที่งาน (เช่น IT-0001) ห้อง ประเภทงาน หรือรายละเอียด" autocomplete="off"></div>
+    <div class="scroll"><table id="regTab"><tr><td class="loading">กำลังโหลด…</td></tr></table></div>
+    <div class="pager"><span id="pgInfo"></span><span><button class="btn" id="pgPrev" type="button">‹ ก่อนหน้า</button> <button class="btn" id="pgNext" type="button">ถัดไป ›</button></span></div>
+  </section>
+
+  <!-- ══ 2) เส้นทางการกำกับติดตาม 3D ══ -->
+  <section class="box" id="workflow">
+    <div class="sh"><div class="ttl"><span class="ic g-blue">🧭</span><div><h2>เส้นทางการกำกับติดตามงานบริการ</h2><p>ทุกคำขอเดินผ่าน 6 ขั้นตอน ตามลำดับจากซ้ายไปขวา ตัวเลขในแต่ละขั้นคือข้อมูลจริงจากระบบ · แตะการ์ดหรือกล่องเพื่อดูรายละเอียด</p></div></div></div>
+    <div class="chips" id="wfChips" style="margin-bottom:16px"></div>
+    <div class="wf-cards" id="wfCards"></div>
+    <div class="stage" id="wfStage" aria-hidden="true"></div>
+    <div class="wf-foot"><span><span class="ring"></span>จุดเคลื่อนที่แสดงงานที่กำลังเดินผ่านแต่ละขั้นตอน</span><button class="btn" type="button" id="wfPlay">⏸ หยุดการเคลื่อนไหว</button></div>
+  </section>
+
+  <!-- ══ 3) แดชบอร์ดสรุปผู้บริหาร ══ -->
+  <section id="dashboard">
+    <div class="sh"><div class="ttl"><span class="ic g-blue">📊</span><div><h2>แดชบอร์ดสรุปผู้บริหาร</h2><p>สรุปผลการดำเนินงานและประสิทธิภาพการให้บริการรายเดือน · เชื่อมต่อฐานข้อมูลจริง อัปเดตทุก 2 นาที</p></div></div>
+      <div class="filters"><span class="live" id="livePill">● LIVE DATA</span><select class="in" id="dDept" aria-label="ฝ่าย"><option value="">ทุกฝ่าย</option></select><select class="in" id="dFy" aria-label="ปีงบประมาณ"></select></div></div>
+
+    <div class="box">
+      <div class="sh"><div><h2 style="font-size:17px">📈 แนวโน้มผลการดำเนินงานรายเดือน</h2><p id="trendSub">จำนวนการให้บริการในแต่ละเดือน</p></div>
+        <div class="tabs" id="mTabs"></div></div>
+      <div class="trend" id="trend"></div>
+      <div class="legend"><span><i style="background:linear-gradient(180deg,#64B5F6,#1E88E5)"></i>เดือนทั่วไป</span><span><i style="background:linear-gradient(180deg,#FFCA6B,#F57C00)"></i>เดือนที่สูงสุด (Peak)</span><span><i style="background:linear-gradient(180deg,#81C784,#2E9E4F)"></i>เดือนล่าสุด</span><span>· วางเมาส์บนแท่งเพื่อดูรายละเอียด</span></div>
+    </div>
+
+    <div class="grid2" style="margin-top:18px">
+      <div class="box">
+        <h2 style="font-size:17px">💰 มูลค่าสะสมที่ประหยัดได้จากการเปลี่ยนผ่านสู่ระบบดิจิทัล (บาท)</h2>
+        <p class="help" id="saveNote" style="margin:2px 0 12px"></p>
+        <div class="vals">
+          <div class="val"><div class="l">มูลค่าจากเวลาที่ประหยัด</div><div class="v num" id="svTime">-</div><div class="s" id="svTimeS"></div></div>
+          <div class="val t"><div class="l">มูลค่าจากกระดาษที่ลดใช้</div><div class="v num" id="svPaper">-</div><div class="s" id="svPaperS"></div></div>
+          <div class="val n"><div class="l">มูลค่ารวมสะสม</div><div class="v num" id="svAll">-</div><div class="s">รวมทั้งสองรายการ</div></div>
+        </div>
+        <div class="stack" id="svStack"></div>
+        <div class="legend" id="svLegend"></div>
+        <p class="help" id="svAvg" style="margin-top:10px;font-size:13.5px"></p>
+      </div>
+      <div class="box">
+        <h2 style="font-size:17px">🎯 คุณภาพการให้บริการ</h2>
+        <p class="help" id="qSub" style="margin:2px 0 6px"></p>
+        <div class="gauge"><svg viewBox="0 0 200 200" id="gauge"></svg><div id="qCap" style="text-align:center;font-size:14px"></div><div class="yrs" id="qYears"></div></div>
+      </div>
+    </div>
+
+    <div class="box" style="margin-top:18px">
+      <h2 style="font-size:17px">🧩 สัดส่วนประเภทงานบริการ (จากทะเบียนงานจริง)</h2>
+      <p class="help" style="margin:2px 0 14px">จัดอันดับตามจำนวนครั้งที่ให้บริการ — สะท้อนภาระงานที่แท้จริงของหน่วยงาน</p>
+      <div class="rank" id="rank"></div>
+    </div>
+
+    <div class="box" style="margin-top:18px">
+      <div class="sh" style="margin-bottom:10px"><div><h2 style="font-size:17px">🧠 บทวิเคราะห์เชิงบริหารรายเดือน</h2><p>สรุปสถานการณ์ สาเหตุ มาตรการ และผลลัพธ์การบริหารจัดการ (สร้างอัตโนมัติจากข้อมูลจริง)</p></div>
+        <select class="in" id="anMonth" style="width:auto"></select></div>
+      <div class="ana" id="ana"></div>
+    </div>
+
+    <div class="box" style="margin-top:18px">
+      <h2 style="font-size:17px">🗓️ ตารางสรุปผลการดำเนินงานรายเดือน</h2>
+      <p class="help" id="mtabSub" style="margin:2px 0 10px"></p>
+      <div class="scroll"><table class="mtab" id="mtab"></table></div>
+    </div>
+  </section>
+
+  <!-- ══ 4) ความพึงพอใจ (ท้ายสุด ไม่รบกวนการชมข้อมูล) ══ -->
+  <section>
+    <div class="satbar" id="satbar">
+      <div class="score num" id="satAvg">-<small>/5</small></div>
+      <div><h3>⭐ ความพึงพอใจของผู้รับบริการ</h3><div class="stars" id="satStars">☆☆☆☆☆</div><div class="meter"><i id="satMeter" style="width:0"></i></div><div class="dist" id="satDist">ยังไม่มีผลประเมิน</div></div>
+      <form class="vote" id="voteForm">
+        <div class="honeypot" aria-hidden="true"><input type="text" id="vWeb" tabindex="-1" autocomplete="off"></div>
+        <b>ให้คะแนนบริการ</b>
+        <span class="pick" id="vPick" role="radiogroup" aria-label="คะแนน"><button type="button" data-s="1" aria-label="1 ดาว">★</button><button type="button" data-s="2" aria-label="2 ดาว">★</button><button type="button" data-s="3" aria-label="3 ดาว">★</button><button type="button" data-s="4" aria-label="4 ดาว">★</button><button type="button" data-s="5" aria-label="5 ดาว">★</button></span>
+        <input class="in" id="vCmt" placeholder="ข้อเสนอแนะ (ไม่บังคับ)" maxlength="500">
+        <button class="send" type="submit" id="vSend">ส่งคะแนน</button>
+        <span class="msg" id="vMsg"></span>
+      </form>
+    </div>
+  </section>
+</main>
+<footer class="credit"></footer>
+
+<script src="config.js"></script>
+<script src="eservice.js"></script>
+<script>
+(function () {
+  'use strict';
+  const { $, esc } = ESV;
+  const OPEN = ['รับเรื่องไว้ก่อน', 'อยู่ระหว่างดำเนินการ'];
+  const REFRESH_MS = 120000;   // อัปเดตอัตโนมัติทุก 2 นาที
+  let JOBS = [], VOTES = [], DEPTS = [], page = 0, score = 0, metric = 'count', nextAt = 0;
+  const PER = 10;
+  const num = n => Number(n || 0).toLocaleString('th-TH', { maximumFractionDigits: 2 });
+  const avg = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : NaN;
+  const cfgNum = (k, d) => { const v = Number(ESV.names[k]); return isFinite(v) && v >= 0 && ESV.names[k] !== '' ? v : d; };
+
+  /* ── QR และลิงก์ ── */
+  const reqUrl = () => ESV.names.requestUrl || new URL('request.html', location.href).href;
+  const trackLink = no => (ESV.names.trackUrl ? ESV.names.trackUrl.replace(/\/?(\?.*)?$/, '/') : location.href.split('?')[0].replace(/index\.html$/, '')) + '?job=' + encodeURIComponent(no);
+  $('qrBtn').addEventListener('click', () => ESV.modal('QR Code ขอรับบริการ',
+    '<div style="text-align:center"><img src="' + esc(ESV.qr(reqUrl(), 600)) + '" alt="QR Code" style="width:min(300px,80vw);border:1px solid var(--line);border-radius:12px">' +
+    '<p class="help">สแกนเพื่อเปิดแบบฟอร์มขอรับบริการ<br>' + esc(reqUrl()) + '</p><a class="btn pri" href="' + esc(ESV.qr(reqUrl(), 1000)) + '" target="_blank" rel="noopener">เปิดไฟล์ QR ขนาดใหญ่ (พิมพ์ติดหน้าห้อง)</a></div>'));
+
+  /* ── เข้าสู่ระบบเจ้าหน้าที่: เลือก 3 วิธี (แก้ปัญหา Chrome หลายบัญชี) · จำวิธีไว้ในเครื่องนี้ ── */
+  const WAYS = {
+    google: { ic: '🏛', t: 'เข้าด้วยบัญชี @msu.ac.th', rec: true, d: 'ไม่ต้องพิมพ์รหัสผ่าน — Google ยืนยันบัญชีมหาวิทยาลัยแล้วเข้าระบบให้ทันที เหมาะกับเครื่องที่ลงชื่อ Google ด้วยอีเมลมหาวิทยาลัยบัญชีเดียว', url: () => ESV.names.domainUrl },
+    choose: { ic: '👥', t: 'เลือกบัญชี @msu.ac.th เอง', d: 'สำหรับ Chrome ที่ลงชื่อ Google ไว้หลายบัญชี (เช่น Gmail ส่วนตัว + อีเมลมหาวิทยาลัย) — ขึ้นหน้าเลือกบัญชีของ Google ก่อน ให้กดเลือกบัญชี @msu.ac.th แล้วเข้าระบบให้ทันที', url: () => ESV.names.chooseUrl },
+    password: { ic: '🔑', t: 'เข้าด้วยชื่อผู้ใช้และรหัสผ่าน', d: 'ใช้ได้กับทุกเครื่อง ไม่ผูกบัญชี Google — สำหรับเครื่องที่ไม่ได้ลงชื่อด้วยอีเมลมหาวิทยาลัย', url: () => ESV.names.webAppUrl || ESV.cfg.WEBAPP_URL }
+  };
+  const savedWay = () => { try { return localStorage.getItem('esv_staff_way') || ''; } catch (e) { return ''; } };
+  function go(way) {
+    const u = WAYS[way] && WAYS[way].url();
+    if (!u) { alert('ยังไม่พร้อม — รอโหลดข้อมูลสักครู่แล้วลองใหม่'); return; }
+    try { localStorage.setItem('esv_staff_way', way); } catch (e) {}
+    window.open(u, '_blank', 'noopener');
+  }
+  function wayModal() {
+    const m = ESV.modal('🔐 เข้าสู่ระบบเจ้าหน้าที่',
+      '<p class="help" style="margin-top:0;font-size:14.5px">เลือกวิธีที่ใช้ได้กับเครื่องนี้ ระบบจะจำไว้ให้ ครั้งต่อไปกดปุ่มเดียวเข้าได้เลย (เปลี่ยนภายหลังได้ที่ปุ่ม ▾ ข้างปุ่มเข้าสู่ระบบ)</p>' +
+      Object.keys(WAYS).map(k => '<button type="button" class="way' + (WAYS[k].rec ? ' rec' : '') + '" data-way="' + k + '"><span class="wi">' + WAYS[k].ic + '</span><span><b>' + WAYS[k].t + '</b>' +
+        (WAYS[k].rec ? ' <em>(แนะนำ)</em>' : '') + '<small>' + WAYS[k].d + '</small></span></button>').join('') +
+      '<p class="help">ทุกวิธีเข้าหน้าผู้ดูแลเดียวกัน ถ้ากดแล้วขึ้นหน้าปฏิเสธสิทธิ์ของ Google (มักเกิดกับ Chrome ที่ลงชื่อหลายบัญชี) ให้กดปุ่ม ▾ ข้างปุ่มเข้าสู่ระบบ แล้วเลือก "เลือกบัญชี @msu.ac.th เอง"</p>');
+    m.el.addEventListener('click', e => { const b = e.target.closest('[data-way]'); if (b) { m.close(); go(b.dataset.way); } });
+  }
+  $('staffBtn').addEventListener('click', () => { const w = savedWay(); if (WAYS[w]) go(w); else wayModal(); });
+  $('staffWay').addEventListener('click', wayModal);
+
+  /* ── แปลงแถวจากชีทเป็นงาน ── */
+  const job = r => {
+    const d = ESV.toDate(r['วันที่ให้บริการ']);
+    return { no: String(r['เลขที่งาน'] || ''), dept: String(r['รหัสฝ่าย'] || ''), deptName: String(r['ฝ่าย'] || ''), type: String(r['ประเภทงานบริการ'] || ''),
+      date: d, created: ESV.toDate(r['ประทับเวลา']), detail: String(r['รายละเอียดงานที่ขอรับบริการ'] || ''), room: String(r['ห้อง/สถานที่'] || ''),
+      status: String(r['สถานะงาน'] || ''), assignee: String(r['ผู้รับผิดชอบ'] || ''), accepted: ESV.toDate(r['เวลารับงาน']), closed: ESV.toDate(r['เวลาปิดงาน']),
+      duration: Number(r['ระยะเวลา (15นาที/หน่วย)']) || 0, workload: Number(r['ค่าภาระงานรวม (หน่วย)']) || 0, files: String(r['ลิงก์ไฟล์ข้อมูล'] || ''),
+      rating: Number(r['คะแนนความพึงพอใจ']) || 0, feedback: String(r['ความคิดเห็นผู้รับบริการ'] || ''), area: String(r['พื้นที่รับผิดชอบ'] || ''),
+      fy: Number(r['ปีงบประมาณ']) || ESV.fiscalYear(d) };
+  };
+
+  /* ── โหลด/ซิงก์ข้อมูล ── */
+  let loading = false, firstLoad = true;
+  function load() {
+    if (loading) return Promise.resolve(); loading = true;
+    $('syncBtn').innerHTML = '<span class="spin">🔄</span> <span class="t">กำลังซิงก์…</span>';
+    return Promise.all(['PublicConfig', 'PublicDepartments', 'PublicJobs', 'Votes'].map(ESV.sheetSafe)).then(([cfg, d, j, v]) => {
+      ESV.applyConfig(cfg);
+      DEPTS = d.sort((a, b) => (Number(a['ลำดับ']) || 999) - (Number(b['ลำดับ']) || 999));
+      JOBS = j.map(job).filter(x => x.no).sort((a, b) => (b.created || 0) - (a.created || 0));
+      VOTES = v.map(r => ({ score: Number(r['คะแนน']) || 0, dept: String(r['รหัสฝ่าย'] || '') })).filter(x => x.score);
+      if (firstLoad) fillFilters();
+      drawAll();
+      $('loadErr').classList.add('hide');
+      if (firstLoad) { firstLoad = false; const q = new URLSearchParams(location.search).get('job'); if (q) { $('rq').value = q; drawReg(); openJob(q); } }
+    }).catch(e => { $('loadErr').textContent = 'โหลดข้อมูลไม่สำเร็จ: ' + e.message; $('loadErr').classList.remove('hide'); })
+      .finally(() => { loading = false; $('syncBtn').innerHTML = '🔄 <span class="t">ซิงก์ข้อมูล</span>'; nextAt = Date.now() + REFRESH_MS; tick(); });
+  }
+  function tick() {
+    const left = Math.max(0, Math.round((nextAt - Date.now()) / 1000)), t = new Date(nextAt - REFRESH_MS);
+    $('updTxt').textContent = 'อัปเดต ' + String(t.getHours()).padStart(2, '0') + ':' + String(t.getMinutes()).padStart(2, '0') + ':' + String(t.getSeconds()).padStart(2, '0') + ' · รอบถัดไป ' + Math.floor(left / 60) + ':' + String(left % 60).padStart(2, '0');
+  }
+  setInterval(() => { if (!document.hidden && nextAt && Date.now() >= nextAt) load(); else if (nextAt) tick(); }, 1000);
+  $('syncBtn').addEventListener('click', load);
+
+  function fillFilters() {
+    const opts = DEPTS.map(d => '<option value="' + esc(d['รหัสฝ่าย']) + '">' + esc(d['ชื่อฝ่าย']) + '</option>').join('');
+    ['rDept', 'dDept'].forEach(id => $(id).insertAdjacentHTML('beforeend', opts));
+    const now = ESV.fiscalYear(new Date());
+    const fys = [...new Set(JOBS.map(j => j.fy).filter(Boolean).concat([now]))].sort((a, b) => b - a);
+    $('dFy').innerHTML = fys.map(y => '<option' + (y === now ? ' selected' : '') + '>' + y + '</option>').join('');
+    $('rFy').insertAdjacentHTML('beforeend', fys.map(y => '<option>' + y + '</option>').join(''));
+  }
+  function drawAll() { drawChips(); drawReg(); drawFlow(); drawDash(); drawSat(); }
+
+  function drawChips() {
+    const fy = Number($('dFy').value) || ESV.fiscalYear(new Date());
+    const fyj = JOBS.filter(j => j.fy === fy && j.status !== 'ยกเลิก');
+    const open = JOBS.filter(j => OPEN.includes(j.status)).length;
+    $('heroChips').innerHTML = '<span class="chip"><i style="background:#1E88E5"></i>คำขอปีงบ ' + fy + ' <b class="num">' + fyj.length + '</b></span>' +
+      '<span class="chip"><i style="background:#7E57C2"></i>งานที่ยังเปิดอยู่ <b class="num">' + open + '</b></span>';
+  }
+
+  /* ══ 1) ทะเบียนงาน ══ */
+  function filtered() {
+    const q = $('rq').value.trim().toLowerCase(), st = $('rSt').value, dp = $('rDept').value, fy = Number($('rFy').value) || 0;
+    return JOBS.filter(j => (!st || j.status === st) && (!dp || j.dept === dp) && (!fy || j.fy === fy) && (!q || [j.no, j.room, j.type, j.detail, j.area, j.deptName].join(' ').toLowerCase().includes(q)));
+  }
+  const ageTag = j => { if (!OPEN.includes(j.status) || !j.created) return ''; const d = Math.floor((Date.now() - j.created) / 86400000); return d < 1 ? '' : '<span class="age ' + (d >= 3 ? 'late' : 'warn') + '">' + (d >= 3 ? '⚠ ' : '') + 'ค้าง ' + d + ' วัน</span>'; };
+  function drawReg() {
+    const list = filtered(), pages = Math.max(1, Math.ceil(list.length / PER));
+    page = Math.min(page, pages - 1);
+    const rows = list.slice(page * PER, page * PER + PER);
+    $('regTab').innerHTML = '<tr><th>เลขที่งาน</th><th>วันที่</th><th>งานบริการ</th><th>ห้อง/สถานที่</th><th>ฝ่าย</th><th>สถานะ</th></tr>' + (rows.length ? rows.map(j =>
+      '<tr class="r" data-no="' + esc(j.no) + '" tabindex="0"><td class="jn">' + esc(j.no) + '</td><td class="num" style="white-space:nowrap">' + ESV.thDate(j.date) + '</td>' +
+      '<td><b>' + esc(j.type) + '</b>' + (j.area ? ' <span class="dept">' + esc(j.area) + '</span>' : '') + '<br><small style="color:#7A8BA3">' + esc(j.detail.slice(0, 110)) + '</small></td>' +
+      '<td>' + esc(j.room || '-') + '</td><td><span class="dept">' + esc(j.dept) + '</span></td><td style="white-space:nowrap">' + ESV.stBadge(j.status) + ageTag(j) + (j.files.match(/https?:\/\//) ? ' 📎' : '') + '</td></tr>').join('')
+      : '<tr><td colspan="6" class="loading">ไม่พบรายการ</td></tr>');
+    $('pgInfo').textContent = list.length ? 'แสดง ' + (page * PER + 1) + '–' + Math.min(list.length, page * PER + PER) + ' จาก ' + list.length + ' รายการ' : '';
+    $('pgPrev').disabled = page === 0; $('pgNext').disabled = page >= pages - 1;
+  }
+  ['rq', 'rSt', 'rDept', 'rFy'].forEach(id => $(id).addEventListener(id === 'rq' ? 'input' : 'change', () => { page = 0; drawReg(); }));
+  $('pgPrev').addEventListener('click', () => { page--; drawReg(); });
+  $('pgNext').addEventListener('click', () => { page++; drawReg(); });
+  $('regTab').addEventListener('click', e => { const tr = e.target.closest('tr.r'); if (tr) openJob(tr.dataset.no); });
+  $('regTab').addEventListener('keydown', e => { const tr = e.target.closest('tr.r'); if (tr && e.key === 'Enter') openJob(tr.dataset.no); });
+
+  /* รายละเอียดงาน: สถานะ ไทม์ไลน์ ไฟล์แนบ และ QR ติดตามผ่านมือถือ */
+  function openJob(no) {
+    no = String(no || '').trim().toUpperCase();
+    const j = JOBS.find(x => x.no.toUpperCase() === no);
+    if (!j) { ESV.modal('ไม่พบเลขที่งาน', '<p>ไม่พบเลขที่งาน <b>' + esc(no) + '</b> — ตรวจสอบเลขที่งานในอีเมลอีกครั้ง หรือกด "ซิงก์ข้อมูล" หลังส่งคำขอ 1–2 นาที</p>'); return; }
+    const closed = ['สำเร็จ', 'ไม่สำเร็จ', 'ยกเลิก'].includes(j.status);
+    const files = (j.files.match(/https?:\/\/[^\s|,]+/g) || []);
+    const fname = u => { try { return decodeURIComponent(u.split('/').pop().split('?')[0]).replace(/^[\w-]+\s\d{8}-\d{6}(-\d+)?\s/, ''); } catch (e) { return 'ไฟล์แนบ'; } };
+    const link = trackLink(j.no);
+    ESV.modal(esc(j.no) + ' · ' + esc(j.type),
+      '<div style="margin-bottom:10px">' + ESV.stBadge(j.status) + ageTag(j) + ' <span class="dept">' + esc(j.deptName || j.dept) + '</span></div>' +
+      '<dl class="kv"><dt>วันที่ให้บริการ</dt><dd>' + ESV.thDate(j.date) + '</dd><dt>ห้อง/สถานที่</dt><dd>' + esc(j.room || '-') + '</dd>' +
+      (j.area ? '<dt>พื้นที่</dt><dd>' + esc(j.area) + '</dd>' : '') + '<dt>รายละเอียด</dt><dd>' + esc(j.detail || '-') + '</dd>' +
+      (j.assignee ? '<dt>ผู้รับผิดชอบ</dt><dd>' + esc(j.assignee) + '</dd>' : '') + '</dl>' +
+      '<ul class="tl">' +
+        '<li class="on"><b>รับเรื่อง</b><small>' + ESV.thStamp(j.created) + '</small></li>' +
+        '<li class="' + (j.accepted ? 'on' : '') + '"><b>เจ้าหน้าที่รับงาน</b><small>' + (j.accepted ? ESV.thStamp(j.accepted) + ' · ใช้เวลา ' + ESV.fmtDur(j.accepted - j.created) : 'รอเจ้าหน้าที่รับงาน') + '</small></li>' +
+        '<li class="' + (closed ? 'on' : '') + '"><b>ปิดงาน' + (closed ? ' · ' + esc(j.status) : '') + '</b><small>' + (j.closed ? ESV.thStamp(j.closed) + ' · รวม ' + ESV.fmtDur(j.closed - j.created) : 'ยังไม่ปิดงาน') + '</small></li>' +
+        '<li class="' + (j.rating ? 'on' : '') + '"><b>ประเมินความพึงพอใจ</b><small>' + (j.rating ? '★'.repeat(j.rating) + '☆'.repeat(5 - j.rating) + (j.feedback ? ' · ' + esc(j.feedback) : '') : 'ยังไม่ประเมิน') + '</small></li>' +
+      '</ul>' +
+      '<div><b>ไฟล์แนบ / หลักฐานการปฏิบัติงาน</b><div class="files">' + (files.length ? files.map(u => '<a href="' + esc(u) + '" target="_blank" rel="noopener">📎 ' + esc(fname(u)) + '</a>').join('') : '<span class="help">ยังไม่มีไฟล์แนบ</span>') + '</div></div>' +
+      '<div class="qrjob"><img src="' + esc(ESV.qr(link, 300)) + '" alt="QR Code ติดตามงาน ' + esc(j.no) + '"><div><b>ติดตามเรื่องนี้ผ่านสมาร์ตโฟน</b><div class="help">สแกน QR Code เพื่อเปิดสถานะงาน ' + esc(j.no) + ' บนมือถือ หรือบันทึกลิงก์นี้ไว้</div><div class="help" style="overflow-wrap:anywhere">' + esc(link) + '</div></div></div>');
+  }
+
+  /* ══ 2) เส้นทางการกำกับติดตาม 3D ══ */
+  let STEPS = [];
+  function drawFlow() {
+    const fy = ESV.fiscalYear(new Date());
+    const fyj = JOBS.filter(j => j.fy === fy && j.status !== 'ยกเลิก');
+    const wait = JOBS.filter(j => j.status === 'รับเรื่องไว้ก่อน'), prog = JOBS.filter(j => j.status === 'อยู่ระหว่างดำเนินการ');
+    const done = fyj.filter(j => j.status === 'สำเร็จ'), fail = fyj.filter(j => j.status === 'ไม่สำเร็จ');
+    const rate = done.length + fail.length ? Math.round(done.length * 1000 / (done.length + fail.length)) / 10 : NaN;
+    const sc = JOBS.filter(j => j.rating).map(j => j.rating).concat(VOTES.map(v => v.score)), sat = avg(sc);
+    const todayKey = new Date().toDateString(), today = JOBS.filter(j => j.created && j.created.toDateString() === todayKey).length;
+    const latest = JOBS[0];
+    const places = new Set(prog.map(j => j.room).filter(Boolean)).size;
+    const withFiles = done.filter(j => /https?:\/\//.test(j.files)).length;
+    $('wfChips').innerHTML = [['#F43F5E', 'ลำดับการดำเนินงาน', '6 ขั้นตอน'], ['#1E88E5', 'คำขอ ปีงบ ' + fy, fyj.length + ' งาน'], ['#7E57C2', 'งานที่ยังเปิดอยู่', (wait.length + prog.length) + ' งาน'],
+      ['#2E9E4F', 'อัตราความสำเร็จ', isFinite(rate) ? rate + '%' : '-'], ['#F9A825', 'ความพึงพอใจ', isFinite(sat) ? sat.toFixed(2) + ' / 5' : '-']]
+      .map(c => '<span class="chip"><i style="background:' + c[0] + '"></i>' + c[1] + ' <b class="num">' + c[2] + '</b></span>').join('');
+    STEPS = [
+      { icon: '📝', t: 'แจ้งขอรับบริการ', sub: 'ตลอด 24 ชม. · ฟอร์มออนไลน์ / QR', big: fyj.length, unit: 'คำขอ', meta: 'ปีงบประมาณ ' + fy + '<br>ในระบบทั้งหมด: ' + JOBS.length,
+        info: 'ผู้ขอรับบริการกรอกแบบฟอร์มออนไลน์ได้ตลอด 24 ชั่วโมง ผ่านลิงก์หรือสแกน QR Code ไม่ต้องเข้าสู่ระบบ เลือกประเภทบริการแล้วระบบรู้ฝ่ายผู้ให้บริการเอง ฝ่ายที่มีพื้นที่รับผิดชอบจะให้เลือกพื้นที่ด้วย', act: '<a class="btn pri" href="request.html">📝 ไปที่แบบฟอร์มขอรับบริการ</a>' },
+      { icon: '🔔', t: 'ออกเลขที่งานและแจ้งเตือน', sub: 'อัตโนมัติ · ภายในไม่กี่วินาที', big: latest ? latest.no : '-', unit: '', meta: 'เลขที่งานล่าสุด<br>คำขอวันนี้: ' + today,
+        info: 'ระบบออกเลขที่งานตามรหัสฝ่ายให้อัตโนมัติ (เช่น IT-0001) แล้วส่งอีเมลถึงเจ้าหน้าที่ผู้รับผิดชอบฝ่าย/พื้นที่นั้นทันที พร้อมส่งเลขที่งานและลิงก์ติดตามสถานะให้ผู้ขอ (ถ้ากรอกอีเมลไว้)' },
+      { icon: '📥', t: 'รับเรื่องไว้ก่อน', sub: 'ตรวจสอบและจัดคิวงาน', big: wait.length, unit: 'งาน', meta: 'รอดำเนินการขณะนี้<br>' + (wait.length ? 'รอนานสุด ' + ESV.fmtDur(Date.now() - Math.min(...wait.map(j => +j.created || Date.now()))) : 'ไม่มีงานค้างในคิว'), list: wait,
+        info: 'งานที่ยังไม่มีเจ้าหน้าที่กดรับ ระบบจะเตือนซ้ำถ้ายังไม่มีผู้รับตามเวลาที่ฝ่ายกำหนด เพื่อไม่ให้งานตกค้าง' },
+      { icon: '🛠️', t: 'อยู่ระหว่างดำเนินการ', sub: 'กดรับงานจากอีเมล · ลงพื้นที่', big: prog.length, unit: 'งาน', meta: 'กำลังดำเนินการขณะนี้<br>สถานที่ที่ไปให้บริการ: ' + places + ' แห่ง', list: prog,
+        info: 'เจ้าหน้าที่คนแรกที่กดรับงานจากอีเมลเป็นเจ้าของงาน ผู้ขอได้อีเมลแจ้งทุกครั้งที่สถานะเปลี่ยน' },
+      { icon: '✅', t: 'ปิดงานพร้อมหลักฐาน', sub: 'บันทึกผล เวลา และหลักฐาน', big: done.length, unit: 'งาน', meta: 'ปิดงานสำเร็จ ปีงบ ' + fy + '<br>อัตราความสำเร็จ: ' + (isFinite(rate) ? rate + '%' : '-'),
+        info: 'เจ้าหน้าที่บันทึกผล ระยะเวลาปฏิบัติงาน และแนบหลักฐาน (รูปภาพ/ไฟล์) ระบบลงวันเวลาปิดงานให้อัตโนมัติ · ปีนี้มีงานที่แนบหลักฐาน ' + withFiles + ' งาน · เวลาปิดงานเฉลี่ย ' + ESV.fmtDur(avg(done.filter(j => j.closed && j.created).map(j => j.closed - j.created))) },
+      { icon: '⭐', t: 'ประเมินความพึงพอใจ', sub: 'หลังปิดงาน · อีเมล / หน้าเว็บ', big: isFinite(sat) ? sat.toFixed(2) : '-', unit: '/ 5', meta: 'คะแนนเฉลี่ย<br>จาก ' + sc.length + ' การประเมิน',
+        info: 'ผู้รับบริการประเมินความพึงพอใจได้จากลิงก์ในอีเมลหลังปิดงาน หรือที่แถบประเมินท้ายหน้านี้ (ไม่ระบุตัวตน) ผลประเมินใช้ปรับปรุงการให้บริการ' }
+    ];
+    const badge = i => i === 0 ? 'เริ่ม • 1' : i === 5 ? '6 • วนกลับ ↻' : String(i + 1);
+    $('wfCards').innerHTML = STEPS.map((s, i) => '<div class="wcard s' + (i + 1) + '" data-i="' + i + '" tabindex="0" role="button"><span class="badge">' + badge(i) + '</span>' +
+      '<h3>' + s.icon + ' ' + esc(s.t) + '</h3><div class="sub">' + esc(s.sub) + '</div><div class="big num">' + esc(String(s.big)) + (s.unit ? ' <small>' + s.unit + '</small>' : '') + '</div>' +
+      '<div class="meta">' + s.meta + '</div><span class="more">ดูรายละเอียด ›</span></div>').join('');
+    drawStage();
+  }
+  function drawStage() {
+    const st = $('wfStage'); if (getComputedStyle(st).display === 'none') return;
+    const H = 280, pts = [0, 1, 2, 3, 4, 5].map(i => ({ x: (i * 2 + 1) / 12 * 1200, y: 248 - i * 24 }));
+    const cols = [['#42A5F5', '#1565C0'], ['#26C6DA', '#00838F'], ['#FFB74D', '#EF6C00'], ['#9575CD', '#5E35B1'], ['#66BB6A', '#2E7D32'], ['#FFD54F', '#F9A825']];
+    const path = 'M30,' + (pts[0].y + 14) + ' ' + pts.map(p => 'L' + p.x + ',' + p.y).join(' ') + ' L1170,' + (pts[5].y - 10);
+    st.innerHTML = '<svg viewBox="0 0 1200 ' + H + '" preserveAspectRatio="none"><defs><linearGradient id="trk" x1="0" x2="1"><stop offset="0" stop-color="#C9DCF2"/><stop offset="1" stop-color="#DCE8F7"/></linearGradient></defs>' +
+      '<path d="' + path + '" stroke="url(#trk)" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
+      pts.slice(0, 5).map((p, i) => '<line x1="' + p.x + '" y1="' + p.y + '" x2="' + pts[i + 1].x + '" y2="' + pts[i + 1].y + '" stroke="' + cols[i][1] + '" stroke-width="3" stroke-dasharray="9 7"/>').join('') +
+      pts.map((p, i) => '<circle cx="' + p.x + '" cy="' + p.y + '" r="6" fill="#fff" stroke="' + cols[i][1] + '" stroke-width="3"/>').join('') +
+      '<circle r="9" fill="#fff" stroke="#F43F5E" stroke-width="4"><animateMotion dur="9s" repeatCount="indefinite" path="M' + pts.map(p => p.x + ',' + p.y).join(' L') + '"/></circle></svg>' +
+      pts.map((p, i) => '<div class="stem" style="left:' + (p.x / 12) + '%;height:' + Math.max(0, p.y - 86) + 'px"></div>' +
+        '<div class="cube s' + (i + 1) + '" data-i="' + i + '" style="left:' + (p.x / 12) + '%;top:' + p.y + 'px" title="' + esc(STEPS[i].t) + '"><div class="in3"><div class="f fr">' + (i + 1) + '</div><div class="f rt"></div><div class="f tp"></div></div><div class="sh2"></div></div>').join('');
+    if ($('wfPlay').dataset.paused === '1') { const sv = st.querySelector('svg'); if (sv && sv.pauseAnimations) sv.pauseAnimations(); }
+  }
+  function stepModal(i) {
+    const s = STEPS[i]; if (!s) return;
+    document.querySelectorAll('.wcard').forEach(c => c.classList.toggle('on', +c.dataset.i === i));
+    const m = ESV.modal('ขั้นที่ ' + (i + 1) + ' · ' + s.icon + ' ' + esc(s.t),
+      '<div class="wcard s' + (i + 1) + '" style="cursor:default;text-align:left;margin-bottom:12px"><div class="big num">' + esc(String(s.big)) + (s.unit ? ' <small>' + s.unit + '</small>' : '') + '</div><div class="meta">' + s.meta + '</div></div>' +
+      '<p style="line-height:1.75;margin:0">' + esc(s.info) + '</p>' +
+      (s.list ? (s.list.length ? '<div class="jl">' + s.list.slice(0, 30).map(j => '<button type="button" data-no="' + esc(j.no) + '"><span><b>' + esc(j.no) + '</b> · ' + esc(j.type) + (j.room ? ' · ' + esc(j.room) : '') + '</span>' + ageTag(j) + '</button>').join('') + '</div>' : '<p class="help">ไม่มีงานในขั้นนี้ขณะนี้</p>') : '') +
+      (s.act ? '<div style="margin-top:14px">' + s.act + '</div>' : '') +
+      '<div style="display:flex;justify-content:space-between;margin-top:16px"><button class="btn" type="button" data-step="' + (i + 5) % 6 + '">‹ ขั้นก่อนหน้า</button><button class="btn" type="button" data-step="' + (i + 1) % 6 + '">ขั้นถัดไป ›</button></div>');
+    m.el.addEventListener('click', e => {
+      const b = e.target.closest('[data-no]'); if (b) { m.close(); openJob(b.dataset.no); return; }
+      const n = e.target.closest('[data-step]'); if (n) { m.close(); stepModal(+n.dataset.step); }
+    });
+  }
+  document.getElementById('workflow').addEventListener('click', e => { const c = e.target.closest('.wcard[data-i], .cube[data-i]'); if (c) stepModal(+c.dataset.i); });
+  document.getElementById('workflow').addEventListener('keydown', e => { const c = e.target.closest('.wcard[data-i]'); if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); stepModal(+c.dataset.i); } });
+  $('wfPlay').addEventListener('click', () => {
+    const b = $('wfPlay'), paused = b.dataset.paused !== '1', sv = $('wfStage').querySelector('svg');
+    b.dataset.paused = paused ? '1' : ''; b.textContent = paused ? '▶ เล่นการเคลื่อนไหว' : '⏸ หยุดการเคลื่อนไหว';
+    $('workflow').classList.toggle('paused', paused);
+    if (sv) { if (paused && sv.pauseAnimations) sv.pauseAnimations(); else if (sv.unpauseAnimations) sv.unpauseAnimations(); }
+  });
+  window.addEventListener('resize', () => { clearTimeout(window.__rz); window.__rz = setTimeout(drawStage, 200); });
+
+  /* ══ 3) แดชบอร์ดสรุปผู้บริหาร ══ */
+  const METRICS = [
+    ['count', 'จำนวนครั้ง', 'ครั้ง'], ['workload', 'ภาระงาน', 'หน่วย'], ['hours', 'ชั่วโมงทำงาน', 'ชม.'], ['avgTime', 'เวลาเฉลี่ย/ครั้ง', 'ชม.'],
+    ['saveH', 'เวลาที่ประหยัด', 'ชม.'], ['paper', 'กระดาษที่ลดได้', 'แผ่น'], ['money', 'มูลค่าที่ประหยัด', 'บาท']];
+  $('mTabs').innerHTML = METRICS.map(m => '<button type="button" class="tab' + (m[0] === metric ? ' on' : '') + '" data-m="' + m[0] + '">' + m[1] + '</button>').join('');
+  $('mTabs').addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (!b) return; metric = b.dataset.m; $('mTabs').querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t === b)); drawTrend(); });
+  const P = () => ({ saveMin: cfgNum('saveMinPerJob', 30), paper: cfgNum('paperPerJob', 2), labor: cfgNum('laborCost', 300), pcost: cfgNum('paperCost', 3) });
+  function stats(js) {
+    const p = P(), act = js.filter(j => j.status !== 'ยกเลิก'), done = act.filter(j => j.status === 'สำเร็จ'), fail = act.filter(j => j.status === 'ไม่สำเร็จ');
+    const hours = act.reduce((a, j) => a + j.duration, 0) * 15 / 60, saveH = act.length * p.saveMin / 60, paper = act.length * p.paper;
+    const closeMs = done.filter(j => j.closed && j.created).map(j => j.closed - j.created).filter(x => x >= 0);
+    return { n: act.length, done: done.length, fail: fail.length, cancel: js.length - act.length, hours: hours, workload: act.reduce((a, j) => a + j.workload, 0),
+      avgClose: avg(closeMs), saveH: saveH, paper: paper, money: saveH * p.labor + paper * p.pcost, timeVal: saveH * p.labor, paperVal: paper * p.pcost,
+      rate: done.length + fail.length ? done.length * 100 / (done.length + fail.length) : NaN, rating: avg(act.filter(j => j.rating).map(j => j.rating)) };
+  }
+  const inDept = () => { const d = $('dDept').value; return JOBS.filter(j => !d || j.dept === d); };
+  function drawDash() { drawTrend(); drawSave(); drawQuality(); drawRank(); drawAnalysis(); drawMonthTable(); }
+  function monthsBack(n) { const out = [], now = new Date(); for (let i = n - 1; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1); out.push({ y: d.getFullYear(), m: d.getMonth() }); } return out; }
+  const inMonth = (j, mm) => j.date && j.date.getFullYear() === mm.y && j.date.getMonth() === mm.m;
+  function drawTrend() {
+    const mons = monthsBack(14), js = inDept(), def = METRICS.find(m => m[0] === metric);
+    const vals = mons.map(mm => { const s = stats(js.filter(j => inMonth(j, mm)));
+      return { mm: mm, s: s, v: metric === 'count' ? s.n : metric === 'workload' ? s.workload : metric === 'hours' ? s.hours : metric === 'avgTime' ? (isFinite(s.avgClose) ? s.avgClose / 3600000 : 0) : metric === 'saveH' ? s.saveH : metric === 'paper' ? s.paper : s.money }; });
+    const max = Math.max(1, ...vals.map(v => v.v)), peak = vals.reduce((a, b, i) => b.v > vals[a].v ? i : a, 0);
+    $('trend').innerHTML = vals.map((v, i) => '<div class="tb' + (i === peak && v.v > 0 ? ' peak' : '') + (i === vals.length - 1 ? ' last' : '') + '" title="' + ESV.TH_M[v.mm.m] + ' ' + (v.mm.y + 543) + ': ' + num(v.v) + ' ' + def[2] + ' · คำขอ ' + v.s.n + ' · สำเร็จ ' + v.s.done + '">' +
+      '<em class="num">' + (v.v ? num(Math.round(v.v * 10) / 10) : '') + '</em><div class="bar" style="height:' + Math.round(v.v / max * 210) + 'px"></div><span>' + ESV.TH_M[v.mm.m] + '<br>' + String(v.mm.y + 543).slice(-2) + '</span></div>').join('');
+    $('trendSub').textContent = def[1] + 'ในแต่ละเดือน · หน่วย: ' + def[2] + ' · ' + ESV.TH_M[mons[0].m] + ' ' + (mons[0].y + 543) + ' – ' + ESV.TH_M[mons[13].m] + ' ' + (mons[13].y + 543);
+    $('livePill').textContent = '● LIVE DATA · ' + ESV.TH_M[mons[0].m] + ' ' + (mons[0].y + 543) + ' – ' + ESV.TH_M[mons[13].m] + ' ' + (mons[13].y + 543);
+  }
+  function drawSave() {
+    const s = stats(inDept()), p = P();
+    $('saveNote').textContent = 'คำนวณจากเวลาที่ลดได้ ' + p.saveMin + ' นาที/คำขอ × ต้นทุนแรงงาน ' + num(p.labor) + ' บาท/ชม. และกระดาษ ' + p.paper + ' แผ่น/คำขอ × ' + p.pcost + ' บาท/แผ่น (รวมหมึก-การพิมพ์-การจัดเก็บ) · จากคำขอทั้งหมด ' + s.n + ' รายการ';
+    $('svTime').innerHTML = num(Math.round(s.timeVal)) + ' <small>บาท</small>'; $('svTimeS').textContent = num(Math.round(s.saveH * 100) / 100) + ' ชม. × ' + num(p.labor) + ' บาท/ชม.';
+    $('svPaper').innerHTML = num(Math.round(s.paperVal)) + ' <small>บาท</small>'; $('svPaperS').textContent = num(s.paper) + ' แผ่น × ' + p.pcost + ' บาท/แผ่น';
+    $('svAll').innerHTML = num(Math.round(s.money)) + ' <small>บาท</small>';
+    const tp = s.money ? s.timeVal * 100 / s.money : 0;
+    $('svStack').innerHTML = s.money ? '<i style="width:' + tp + '%;background:linear-gradient(90deg,#64B5F6,#1565C0)">' + num(Math.round(s.timeVal)) + ' บาท</i><i style="width:' + (100 - tp) + '%;background:linear-gradient(90deg,#4DD0E1,#00838F)">' + (100 - tp > 8 ? num(Math.round(s.paperVal)) : '') + '</i>' : '';
+    const months = new Set(inDept().filter(j => j.date && j.status !== 'ยกเลิก').map(j => j.date.getFullYear() + '-' + j.date.getMonth())).size;
+    $('svAvg').textContent = s.money ? '· เฉลี่ย ' + num(Math.round(s.money / Math.max(1, months))) + ' บาท/เดือน (' + months + ' เดือนที่มีข้อมูล) · เวลาที่ประหยัดเทียบเท่าการทำงาน ' + num(Math.round(s.saveH / 7 * 10) / 10) + ' วันทำงาน (7 ชม./วัน)' : '';
+    $('svLegend').innerHTML = '<span><i style="background:#1565C0"></i>เวลาที่ประหยัด ' + tp.toFixed(1) + '%</span><span><i style="background:#00838F"></i>กระดาษที่ลดใช้ ' + (s.money ? (100 - tp).toFixed(1) : '0') + '%</span>';
+  }
+  function drawQuality() {
+    const fy = Number($('dFy').value), js = inDept(), s = stats(js.filter(j => j.fy === fy)), prev = stats(js.filter(j => j.fy === fy - 1));
+    const r = isFinite(s.rate) ? s.rate : 0, C = 2 * Math.PI * 78;
+    $('gauge').innerHTML = '<defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#69F0AE"/><stop offset="1" stop-color="#2E7D32"/></linearGradient></defs>' +
+      '<circle cx="100" cy="100" r="78" fill="none" stroke="#E8F5E9" stroke-width="18"/>' +
+      '<circle cx="100" cy="100" r="78" fill="none" stroke="url(#gg)" stroke-width="18" stroke-linecap="round" stroke-dasharray="' + (C * r / 100) + ' ' + C + '" transform="rotate(-90 100 100)"/>' +
+      '<text x="100" y="104" text-anchor="middle" font-size="38" font-weight="700" fill="#1B5E20">' + (isFinite(s.rate) ? (Math.round(s.rate * 10) / 10) + '%' : '-') + '</text><text x="100" y="130" text-anchor="middle" font-size="13" fill="#5B6E88">ปีงบประมาณ ' + fy + '</text>';
+    $('qSub').textContent = 'อัตราความสำเร็จของงาน ปีงบประมาณ ' + fy + ' (1 ต.ค. ' + (fy - 1) + ' – 30 ก.ย. ' + fy + ')';
+    const diff = isFinite(s.rate) && isFinite(prev.rate) ? s.rate - prev.rate : NaN;
+    $('qCap').innerHTML = 'สำเร็จ <b>' + s.done + '</b> จาก <b>' + (s.done + s.fail) + '</b> งานที่ปิดแล้ว' + (isFinite(diff) ? '<br><b style="color:' + (diff >= 0 ? '#2E7D32' : '#C62828') + '">' + (diff >= 0 ? '▲ ' : '▼ ') + Math.abs(Math.round(diff * 100) / 100) + ' จุด</b> เทียบปีงบ ' + (fy - 1) + ' (' + (Math.round(prev.rate * 100) / 100) + '%)' : '');
+    $('qYears').innerHTML = [4, 3, 2, 1, 0].map(k => { const y = fy - k, t = stats(js.filter(j => j.fy === y));
+      return '<div class="yr"><div style="font-weight:700;color:#1B5E20;min-height:16px">' + (isFinite(t.rate) ? Math.round(t.rate * 10) / 10 + '%' : 'ไม่มีข้อมูล') + '</div><div class="c">' + (isFinite(t.rate) ? '<i class="' + (k === 0 ? 'cur' : '') + '" style="height:' + Math.max(8, t.rate * .64) + 'px"></i>' : '<span class="no"></span>') + '</div>' + y + '</div>'; }).join('');
+  }
+  const RANK_COLORS = [['#64B5F6', '#1E88E5'], ['#5C6BC0', '#283593'], ['#4DD0E1', '#00ACC1'], ['#7986CB', '#3949AB'], ['#4DB6AC', '#00897B'], ['#B0BEC5', '#78909C'], ['#81D4FA', '#039BE5'], ['#B39DDB', '#7E57C2'], ['#9FA8DA', '#5C6BC0'], ['#80CBC4', '#26A69A'], ['#A5D6A7', '#43A047'], ['#90A4AE', '#546E7A']];
+  function drawRank() {
+    const fy = Number($('dFy').value), js = inDept().filter(j => j.fy === fy && j.status !== 'ยกเลิก'), by = {};
+    js.forEach(j => { const k = j.type || 'ไม่ระบุ'; by[k] = by[k] || { n: 0, w: 0 }; by[k].n++; by[k].w += j.workload; });
+    const list = Object.entries(by).sort((a, b) => b[1].n - a[1].n), max = list.length ? list[0][1].n : 1;
+    $('rank').innerHTML = list.length ? list.map(([k, v], i) => { const c = RANK_COLORS[i % RANK_COLORS.length];
+      return '<div class="rk"><div class="top2"><b>' + (i + 1) + '. ' + esc(k) + '</b><span class="num">' + v.n + ' ครั้ง · ' + (Math.round(v.n * 1000 / js.length) / 10) + '% · ' + num(Math.round(v.w * 10) / 10) + ' หน่วย</span></div>' +
+        '<div class="bg"><i style="width:' + (v.n * 100 / max) + '%;background:linear-gradient(90deg,' + c[0] + ',' + c[1] + ')"></i></div></div>'; }).join('') : '<div class="loading">ยังไม่มีข้อมูลในปีงบประมาณนี้</div>';
+  }
+  /* บทวิเคราะห์รายเดือน: สร้างข้อความจากข้อมูลจริง (เทียบเดือนก่อน · ประเภทงานหลัก · งานค้าง · เวลาเฉลี่ย · ความพึงพอใจ) */
+  function drawAnalysis() {
+    const sel = $('anMonth'), mons = monthsBack(14).reverse(), keep = sel.value;
+    sel.innerHTML = mons.map(mm => '<option value="' + mm.y + '-' + mm.m + '">' + ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'][mm.m] + ' ' + (mm.y + 543) + '</option>').join('');
+    if (keep) sel.value = keep;
+    const [y, m] = sel.value.split('-').map(Number), cur = { y: y, m: m }, pv = { y: m === 0 ? y - 1 : y, m: m === 0 ? 11 : m - 1 };
+    const js = inDept(), a = js.filter(j => inMonth(j, cur)), b = js.filter(j => inMonth(j, pv)), s = stats(a), sp = stats(b);
+    const now = new Date(), ongoing = now.getFullYear() === y && now.getMonth() === m;
+    const ch = sp.n ? Math.round((s.n - sp.n) * 10000 / sp.n) / 100 : NaN;
+    const types = {}; a.filter(j => j.status !== 'ยกเลิก').forEach(j => { types[j.type] = (types[j.type] || 0) + 1; });
+    const top = Object.entries(types).sort((p, q) => q[1] - p[1])[0];
+    const openNow = a.filter(j => OPEN.includes(j.status)), late = openNow.filter(j => j.created && Date.now() - j.created > 3 * 86400000);
+    const resp = avg(a.filter(j => j.accepted && j.created).map(j => j.accepted - j.created));
+    const card = (c, t, txt) => '<div class="an" style="--c:' + c + '"><h4>' + t + '</h4><p>' + txt + '</p></div>';
+    $('ana').innerHTML = !s.n && !sp.n ? '<div class="loading" style="grid-column:1/-1">ยังไม่มีข้อมูลในเดือนนี้</div>' :
+      card('#1E88E5', '📌 สรุปสถานการณ์', 'มีคำขอรับบริการ <b>' + s.n + '</b> งาน' + (isFinite(ch) ? ' ' + (ch >= 0 ? 'เพิ่มขึ้น' : 'ลดลง') + 'ร้อยละ ' + Math.abs(ch) + ' จากเดือนก่อน (' + sp.n + ' งาน)' : '') +
+        ' ปิดงานสำเร็จ ' + s.done + ' งาน' + (isFinite(s.rate) ? ' อัตราความสำเร็จร้อยละ ' + Math.round(s.rate * 100) / 100 : '')) +
+      card('#EF6C00', '🔎 สาเหตุ / ปัจจัย', (top ? 'งานส่วนใหญ่เป็น "' + esc(top[0]) + '" ' + top[1] + ' งาน (ร้อยละ ' + Math.round(top[1] * 10000 / Math.max(1, s.n)) / 100 + ')' : 'ยังไม่มีงานในเดือนนี้') +
+        (ongoing ? ' · ข้อมูลยังเป็นระหว่างเดือน จึงยังไม่สามารถสรุปแนวโน้มของทั้งเดือนได้' : '') + (s.cancel ? ' · มีการยกเลิก ' + s.cancel + ' งาน' : '')) +
+      card('#5E35B1', '🛠️ มาตรการที่ดำเนินการ', 'แจ้งเตือนเจ้าหน้าที่ผู้รับผิดชอบฝ่าย/พื้นที่อัตโนมัติทุกคำขอ' + (isFinite(resp) ? ' เวลาตอบรับงานเฉลี่ย ' + ESV.fmtDur(resp) : '') +
+        (openNow.length ? ' · ติดตามงานที่ยังเปิดอยู่ ' + openNow.length + ' งาน' + (late.length ? ' (ค้างเกิน 3 วัน ' + late.length + ' งาน — เร่งติดตาม)' : '') : ' · ไม่มีงานค้าง')) +
+      card('#2E7D32', '🏆 ผลลัพธ์การบริหารจัดการ', (isFinite(s.avgClose) ? 'ปิดงานเฉลี่ย ' + ESV.fmtDur(s.avgClose) + ' ต่องาน' : 'ยังไม่มีงานที่ปิดสำเร็จ') +
+        (isFinite(s.rating) ? ' · ความพึงพอใจเฉลี่ย ' + s.rating.toFixed(2) + '/5' : '') + ' · ประหยัดได้ประมาณ ' + num(Math.round(s.money)) + ' บาท และติดตามสถานะผ่านระบบออนไลน์ได้ตลอด 24 ชม.');
+  }
+  $('anMonth').addEventListener('change', drawAnalysis);
+  function drawMonthTable() {
+    const fy = Number($('dFy').value), js = inDept().filter(j => j.fy === fy), rows = [];
+    for (let i = 0; i < 12; i++) { const d = new Date(fy - 543 - 1, 9 + i, 1), mm = { y: d.getFullYear(), m: d.getMonth() }; rows.push({ mm: mm, s: stats(js.filter(j => inMonth(j, mm))) }); }
+    const t = stats(js);
+    const cells = s => '<td class="n num">' + s.n + '</td><td class="n num">' + s.done + '</td><td class="n num">' + s.fail + '</td><td class="n num">' + s.cancel + '</td><td class="n num">' + (isFinite(s.rate) ? Math.round(s.rate * 10) / 10 + '%' : '-') +
+      '</td><td class="n num">' + num(Math.round(s.hours * 10) / 10) + '</td><td class="n num">' + num(Math.round(s.workload * 10) / 10) + '</td><td class="n">' + ESV.fmtDur(s.avgClose) + '</td><td class="n num">' + (isFinite(s.rating) ? s.rating.toFixed(2) : '-') + '</td>';
+    $('mtab').innerHTML = '<tr><th>เดือน</th><th class="n">คำขอ</th><th class="n">สำเร็จ</th><th class="n">ไม่สำเร็จ</th><th class="n">ยกเลิก</th><th class="n">อัตราสำเร็จ</th><th class="n">ชั่วโมงปฏิบัติงาน</th><th class="n">ภาระงาน</th><th class="n">ปิดงานเฉลี่ย</th><th class="n">ความพึงพอใจ</th></tr>' +
+      rows.map(r => '<tr><td>' + ESV.TH_M[r.mm.m] + ' ' + (r.mm.y + 543) + '</td>' + cells(r.s) + '</tr>').join('') + '<tr class="tot"><td>รวมปีงบประมาณ ' + fy + '</td>' + cells(t) + '</tr>';
+    $('mtabSub').textContent = 'ปีงบประมาณ ' + fy + ' (ต.ค. ' + (fy - 1) + ' – ก.ย. ' + fy + ') · ' + ($('dDept').value ? (DEPTS.find(d => d['รหัสฝ่าย'] === $('dDept').value) || {})['ชื่อฝ่าย'] : 'ทุกฝ่าย');
+  }
+  ['dDept', 'dFy'].forEach(id => $(id).addEventListener('change', () => { drawChips(); drawDash(); }));
+
+  /* ══ 4) ความพึงพอใจ (ท้ายหน้า) ══ */
+  function drawSat() {
+    const sc = JOBS.filter(j => j.rating).map(j => j.rating).concat(VOTES.map(v => v.score));
+    if (!sc.length) return;
+    const a = avg(sc), hi = sc.filter(x => x >= 4).length;
+    $('satAvg').innerHTML = a.toFixed(2) + '<small>/5</small>';
+    $('satStars').textContent = '★'.repeat(Math.round(a)) + '☆'.repeat(5 - Math.round(a));
+    $('satMeter').style.width = (a / 5 * 100) + '%';
+    $('satDist').innerHTML = 'จากผู้ประเมิน ' + sc.length + ' ราย · ' + Math.round(hi * 100 / sc.length) + '% ให้ 4–5 ดาว · ' + [5, 4, 3, 2, 1].map(s => s + '★ ' + sc.filter(x => x === s).length).join(' · ');
+  }
+  $('vPick').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; score = +b.dataset.s; $('vPick').querySelectorAll('button').forEach(x => x.classList.toggle('on', +x.dataset.s <= score)); });
+  $('voteForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!score) { $('vMsg').textContent = 'กรุณาเลือกคะแนน 1–5 ดาว'; return; }
+    const b = $('vSend'); b.disabled = true; $('vMsg').textContent = 'กำลังส่ง…';
+    try { await ESV.post({ action: 'vote', score: score, comment: $('vCmt').value.trim(), dept: '', website: $('vWeb').value });
+      $('vMsg').textContent = '✓ ขอบคุณสำหรับการประเมิน'; VOTES.push({ score: score, dept: '' }); drawSat(); drawFlow();
+      score = 0; $('vPick').querySelectorAll('button').forEach(x => x.classList.remove('on')); $('vCmt').value = '';
+    } catch (ex) { $('vMsg').textContent = ex.message; } finally { b.disabled = false; }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>
