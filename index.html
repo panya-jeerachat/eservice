@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>E-Service คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม</title>
+<meta name="description" content="ช่องทางออนไลน์สำหรับขอรับบริการและติดตามสถานะงานบริการ คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม">
+<link rel="preconnect" href="https://eng.msu.ac.th" crossorigin>
+<link rel="stylesheet" href="https://eng.msu.ac.th/dwms/fonts/mornamchi.css">
+<link rel="stylesheet" href="eservice.css">
+<style>
+/* ── แถบบน ── */
+.top{position:sticky;top:0;z-index:40;background:linear-gradient(110deg,var(--maroon),var(--maroon-d));color:#fff;box-shadow:0 4px 18px rgba(0,0,0,.12)}
+.top .wrap{display:flex;align-items:center;gap:12px;min-height:64px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto;color:#fff;text-decoration:none;min-width:0}
+.brand .lg{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
+.brand b{display:block;font-size:17px;line-height:1.2}.brand small{display:block;font-size:12.5px;opacity:.85}
+.top .acts{display:flex;gap:8px;flex-wrap:wrap}
+.upd{font-size:12px;opacity:.85;display:flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:#34D399;box-shadow:0 0 0 3px rgba(52,211,153,.3)}
+/* ── ส่วนต้อนรับ ── */
+.hero{background:linear-gradient(120deg,var(--maroon) 0%,var(--maroon-d) 60%,color-mix(in srgb,var(--maroon-d) 70%,var(--gold)) 100%);color:#fff;padding:36px 0 70px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.8fr);gap:28px;align-items:center}
+.hero .kicker{display:inline-block;background:rgba(255,255,255,.14);border-radius:999px;padding:3px 12px;font-size:13px;margin-bottom:10px}
+.hero h1{font-size:clamp(26px,4vw,40px)}
+.hero p{font-size:16.5px;opacity:.9;margin:10px 0 18px;max-width:560px}
+.hero .cta{display:flex;gap:10px;flex-wrap:wrap}
+.hero .btn.pri{background:#fff;color:var(--maroon);border-color:#fff}
+.qrcard{background:#fff;color:var(--ink);border-radius:18px;padding:18px;text-align:center;box-shadow:0 18px 40px rgba(0,0,0,.2)}
+.qrcard h3{font-size:16px;color:var(--maroon)}.qrcard img{width:190px;height:190px;margin:10px auto 6px;display:block;border-radius:10px}
+.qrcard .help{margin-bottom:8px}
+/* ── ติดตามสถานะ ── */
+.track{margin-top:-44px;position:relative;z-index:5;padding:18px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center}
+.track .ic{font-size:26px}
+/* ── ส่วนต่าง ๆ ── */
+section{margin-top:28px}
+.sh{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.sh h2{font-size:22px}.sh p{margin:2px 0 0;color:var(--muted);font-size:14.5px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}.filters .in{width:auto;padding:8px 10px;font-size:15px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{padding:14px 16px;position:relative;overflow:hidden}
+.kpi::after{content:"";position:absolute;right:-22px;top:-22px;width:80px;height:80px;border-radius:50%;background:var(--t,var(--maroon-l));opacity:.6}
+.kpi .v{font-size:30px;font-weight:700;line-height:1.1;color:var(--c,var(--maroon));position:relative}
+.kpi .l{font-size:14px;color:var(--muted);font-weight:700;position:relative}.kpi .s{font-size:12.5px;color:var(--faint);position:relative}
+.k1{--c:var(--maroon);--t:var(--maroon-l)}.k2{--c:var(--recv);--t:var(--recv-bg)}.k3{--c:var(--prog);--t:var(--prog-bg)}.k4{--c:var(--ok);--t:var(--ok-bg)}
+.minis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:12px}
+.mini{padding:12px 14px;border-left:4px solid var(--gold)}.mini .v{font-size:19px;font-weight:700}.mini .l{font-size:13px;color:var(--muted);font-weight:700}
+.two{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;margin-top:14px}
+.panel{padding:16px}
+.panel h3{font-size:17px;margin-bottom:10px}
+.bars{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;align-items:end;height:190px}
+.bar{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px;min-width:0}
+.bar .stk{width:100%;max-width:30px;background:color-mix(in srgb,var(--maroon) 26%,#fff);border-radius:5px 5px 0 0;min-height:2px;display:flex;align-items:flex-end;overflow:hidden}
+.bar .stk i{display:block;width:100%;background:var(--maroon)}
+.bar span{font-size:11px;color:var(--faint)}.bar em{font-style:normal;font-size:11.5px;color:var(--muted)}
+.lg2{font-size:12.5px;color:var(--muted);display:flex;gap:12px;margin-top:6px}.lg2 i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th{text-align:left;color:var(--muted);font-weight:700;font-size:13px;border-bottom:1px solid var(--line);padding:8px}
+td{border-bottom:1px solid #F1F2F4;padding:9px 8px;vertical-align:top}
+td.n,th.n{text-align:right}
+.scroll{overflow-x:auto}
+/* ── เส้นทางงาน ── */
+.flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.step{padding:14px;text-align:center;position:relative}
+.step .no{width:34px;height:34px;border-radius:50%;background:var(--maroon);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+.step b{display:block;font-size:15px}.step small{display:block;color:var(--muted);font-size:12.5px;line-height:1.5;margin-top:4px}
+/* ── ความพึงพอใจ ── */
+.sat{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:14px}
+.score{font-size:52px;font-weight:700;color:var(--maroon);line-height:1}
+.stars{color:var(--gold);font-size:22px;letter-spacing:2px}
+.dist{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 10px;align-items:center;font-size:13.5px;margin-top:10px}
+.dist .bg{height:8px;background:#EEF0F3;border-radius:99px;overflow:hidden}.dist .bg i{display:block;height:100%;background:var(--gold)}
+.pick{display:flex;gap:6px;margin:6px 0 10px}
+.pick button{border:1px solid var(--line);background:#fff;border-radius:10px;font-size:22px;width:46px;height:46px;cursor:pointer;color:#D1D5DB}
+.pick button.on{color:var(--gold);border-color:var(--gold);background:var(--gold-l)}
+/* ── ทะเบียนงาน ── */
+tr.r{cursor:pointer}tr.r:hover td{background:#FAFBFC}
+.pager{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;font-size:14px;color:var(--muted)}
+.tl{list-style:none;margin:10px 0 0;padding:0}
+.tl li{position:relative;padding:0 0 14px 26px}
+.tl li::before{content:"";position:absolute;left:6px;top:6px;width:10px;height:10px;border-radius:50%;background:#D1D5DB}
+.tl li::after{content:"";position:absolute;left:10px;top:18px;bottom:0;width:2px;background:#E5E7EB}
+.tl li:last-child::after{display:none}
+.tl li.on::before{background:var(--maroon)}
+.tl b{display:block}.tl small{color:var(--faint)}
+dl.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:0}
+dl.kv dt{color:var(--muted);font-size:14px}dl.kv dd{margin:0;overflow-wrap:anywhere}
+@media (max-width:960px){ .hero .wrap,.two,.sat{grid-template-columns:minmax(0,1fr)} .kpis,.minis{grid-template-columns:repeat(2,minmax(0,1fr))} .flow{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:620px){ .track{grid-template-columns:minmax(0,1fr)} .track .ic{display:none} .flow{grid-template-columns:repeat(2,minmax(0,1fr))} .top .acts .btn span{display:none} }
+</style>
+</head>
+<body data-title="หน้าหลัก">
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="lg" aria-hidden="true">🛠️</span><span><b data-cfg="appShort">E-Service</b><small data-cfg="faculty">คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม</small></span></a>
+    <span class="upd"><span class="dot"></span><span id="updTxt">กำลังโหลด…</span></span>
+    <div class="acts">
+      <a class="btn ghost" href="request.html">📝 <span>ขอรับบริการ</span></a>
+      <button class="btn ghost" type="button" id="qrBtn">▣ <span>QR Code</span></button>
+      <a class="btn ghost" id="staffBtn" data-cfg-href="webAppUrl" href="#" target="_blank" rel="noopener">🔐 <span>เข้าสู่ระบบเจ้าหน้าที่</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <span class="kicker">บริการออนไลน์ · ทุกฝ่ายของคณะ</span>
+      <h1 data-cfg="appName">E-Service คณะวิศวกรรมศาสตร์</h1>
+      <p>ช่องทางออนไลน์สำหรับขอรับบริการจากทุกฝ่ายของคณะในที่เดียว ระบบแจ้งเจ้าหน้าที่ผู้รับผิดชอบโดยอัตโนมัติ และติดตามสถานะได้ทุกขั้นตอน ไม่ต้องเข้าสู่ระบบ</p>
+      <div class="cta"><a class="btn pri" href="request.html">📝 ขอรับบริการ</a><a class="btn ghost" href="#registry">🔎 ติดตามสถานะ</a></div>
+    </div>
+    <div class="qrcard">
+      <h3>ช่องทางการเข้าใช้บริการ</h3>
+      <img id="heroQr" alt="QR Code แบบฟอร์มขอรับบริการ" width="190" height="190">
+      <div class="help">สแกนด้วยกล้องโทรศัพท์เพื่อเปิดแบบฟอร์มขอรับบริการ</div>
+      <a class="btn" id="qrDl" href="#" target="_blank" rel="noopener">เปิด QR ขนาดใหญ่ (พิมพ์ติดหน้าห้อง)</a>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="card track">
+    <span class="ic">🔎</span>
+    <input class="in" id="trackIn" placeholder="กรอกเลขที่งาน เช่น IT-0001 เพื่อติดตามสถานะคำขอ" autocomplete="off">
+    <button class="btn pri" type="button" id="trackGo">ติดตามสถานะ</button>
+  </div>
+  <div id="loadErr" class="err hide" style="margin-top:14px"></div>
+
+  <section id="dashboard">
+    <div class="sh"><div><h2>แดชบอร์ดสรุปผลการให้บริการ</h2><p id="dashSub">ข้อมูลจริงจากระบบ อัปเดตอัตโนมัติ</p></div>
+      <div class="filters"><select class="in" id="fDept" aria-label="ฝ่าย"><option value="">ทุกฝ่าย</option></select><select class="in" id="fFy" aria-label="ปีงบประมาณ"></select></div></div>
+    <div class="kpis">
+      <div class="card kpi k1"><div class="v num" id="kTotal">-</div><div class="l">คำขอทั้งหมด</div><div class="s" id="kTotalS"></div></div>
+      <div class="card kpi k2"><div class="v num" id="kWait">-</div><div class="l">รอผู้รับงาน</div><div class="s" id="kWaitS"></div></div>
+      <div class="card kpi k3"><div class="v num" id="kProg">-</div><div class="l">กำลังดำเนินการ</div><div class="s" id="kProgS"></div></div>
+      <div class="card kpi k4"><div class="v num" id="kRate">-</div><div class="l">อัตราความสำเร็จ</div><div class="s" id="kRateS"></div></div>
+    </div>
+    <div class="minis">
+      <div class="card mini"><div class="v num" id="mResp">-</div><div class="l">⚡ เวลาตอบรับเฉลี่ย</div></div>
+      <div class="card mini"><div class="v num" id="mClose">-</div><div class="l">🏁 เวลาปิดงานเฉลี่ย</div></div>
+      <div class="card mini"><div class="v num" id="mHours">-</div><div class="l">🕒 เวลาปฏิบัติงานรวม</div></div>
+      <div class="card mini"><div class="v num" id="mSat">-</div><div class="l">⭐ ความพึงพอใจเฉลี่ย</div></div>
+    </div>
+    <div class="two">
+      <div class="card panel"><h3>จำนวนคำขอรายเดือน</h3><div class="bars" id="bars"></div>
+        <div class="lg2"><span><i style="background:color-mix(in srgb,var(--maroon) 26%,#fff)"></i>ทั้งหมด</span><span><i style="background:var(--maroon)"></i>สำเร็จ</span></div></div>
+      <div class="card panel"><h3>สรุปรายฝ่าย</h3><div class="scroll"><table id="deptTab"></table></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh"><div><h2>เส้นทางการให้บริการ</h2><p>ทุกคำขอเดินผ่าน 6 ขั้นตอน ตรวจสอบได้ทุกขั้น</p></div></div>
+    <div class="flow">
+      <div class="card step"><div class="no">1</div><b>ส่งคำขอ</b><small>กรอกแบบฟอร์มออนไลน์ เลือกประเภทบริการและพื้นที่</small></div>
+      <div class="card step"><div class="no">2</div><b>แจ้งเจ้าหน้าที่</b><small>ระบบส่งอีเมลถึงผู้รับผิดชอบฝ่าย/พื้นที่นั้นทันที</small></div>
+      <div class="card step"><div class="no">3</div><b>รับงาน</b><small>เจ้าหน้าที่คนแรกที่กดรับเป็นเจ้าของงาน</small></div>
+      <div class="card step"><div class="no">4</div><b>ดำเนินการ</b><small>ผู้ขอได้อีเมลแจ้งทุกครั้งที่สถานะเปลี่ยน</small></div>
+      <div class="card step"><div class="no">5</div><b>ปิดงาน</b><small>บันทึกผล เวลาที่ใช้ และหลักฐานการปฏิบัติงาน</small></div>
+      <div class="card step"><div class="no">6</div><b>ประเมินผล</b><small>ผู้รับบริการประเมินความพึงพอใจ</small></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh"><div><h2>ความพึงพอใจของผู้รับบริการ</h2><p>จากการประเมินหลังปิดงาน และแบบประเมินทั่วไป (ไม่ระบุตัวตน)</p></div></div>
+    <div class="sat">
+      <div class="card panel"><div class="score num" id="satAvg">-</div><div class="stars" id="satStars">☆☆☆☆☆</div><div class="help" id="satCnt">ยังไม่มีผลประเมิน</div><div class="dist" id="satDist"></div></div>
+      <div class="card panel">
+        <h3>ประเมินความพึงพอใจ (ไม่ระบุตัวตน)</h3>
+        <form id="voteForm">
+          <div class="honeypot" aria-hidden="true"><input type="text" id="vWeb" tabindex="-1" autocomplete="off"></div>
+          <div class="pick" id="vPick" role="radiogroup" aria-label="คะแนน">
+            <button type="button" data-s="1" aria-label="1 ดาว">★</button><button type="button" data-s="2" aria-label="2 ดาว">★</button><button type="button" data-s="3" aria-label="3 ดาว">★</button><button type="button" data-s="4" aria-label="4 ดาว">★</button><button type="button" data-s="5" aria-label="5 ดาว">★</button>
+          </div>
+          <select class="in" id="vDept" style="margin-bottom:8px"><option value="">ฝ่ายที่ได้รับบริการ (ไม่บังคับ)</option></select>
+          <textarea class="in" id="vCmt" placeholder="ข้อเสนอแนะ (ไม่บังคับ)" style="min-height:70px"></textarea>
+          <div id="vMsg" class="help"></div>
+          <button class="btn pri" type="submit" id="vSend" style="margin-top:8px">ส่งแบบประเมิน</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="registry">
+    <div class="sh"><div><h2>ทะเบียนงานบริการ</h2><p id="regSub">คลิกรายการเพื่อดูสถานะและไทม์ไลน์</p></div>
+      <div class="filters"><input class="in" id="rq" type="search" placeholder="ค้นหาเลขที่งาน ห้อง ประเภท"><select class="in" id="rSt"><option value="">ทุกสถานะ</option><option>รับเรื่องไว้ก่อน</option><option>อยู่ระหว่างดำเนินการ</option><option>สำเร็จ</option><option>ไม่สำเร็จ</option><option>ยกเลิก</option></select><select class="in" id="rDept"><option value="">ทุกฝ่าย</option></select></div></div>
+    <div class="card panel"><div class="scroll"><table id="regTab"><tr><td class="loading">กำลังโหลด…</td></tr></table></div>
+      <div class="pager"><span id="pgInfo"></span><span><button class="btn" id="pgPrev" type="button">‹ ก่อนหน้า</button> <button class="btn" id="pgNext" type="button">ถัดไป ›</button></span></div></div>
+  </section>
+</main>
+<footer class="credit"></footer>
+
+<script src="config.js"></script>
+<script src="eservice.js"></script>
+<script>
+(function () {
+  'use strict';
+  const { $, esc } = ESV;
+  const OPEN = ['รับเรื่องไว้ก่อน', 'อยู่ระหว่างดำเนินการ'];
+  let JOBS = [], VOTES = [], DEPTS = [], page = 0, score = 0;
+  const PER = 15;
+
+  const reqUrl = () => ESV.names.requestUrl || new URL('request.html', location.href).href;
+  function setQr() {
+    $('heroQr').src = ESV.qr(reqUrl(), 380);
+    $('qrDl').href = ESV.qr(reqUrl(), 1000);
+  }
+  $('qrBtn').addEventListener('click', () => ESV.modal('QR Code ขอรับบริการ',
+    '<div style="text-align:center"><img src="' + esc(ESV.qr(reqUrl(), 600)) + '" alt="QR Code" style="width:min(320px,80vw);border:1px solid var(--line);border-radius:12px">' +
+    '<p class="help">' + esc(reqUrl()) + '</p><a class="btn pri" href="' + esc(ESV.qr(reqUrl(), 1000)) + '" target="_blank" rel="noopener">เปิดไฟล์ QR ขนาดใหญ่</a></div>'));
+
+  /* ── แปลงแถวจากชีทเป็นงาน ── */
+  const job = r => {
+    const d = ESV.toDate(r['วันที่ให้บริการ']);
+    return { no: String(r['เลขที่งาน'] || ''), dept: String(r['รหัสฝ่าย'] || ''), deptName: String(r['ฝ่าย'] || ''), type: String(r['ประเภทงานบริการ'] || ''),
+      date: d, created: ESV.toDate(r['ประทับเวลา']), detail: String(r['รายละเอียดงานที่ขอรับบริการ'] || ''), room: String(r['ห้อง/สถานที่'] || ''),
+      status: String(r['สถานะงาน'] || ''), assignee: String(r['ผู้รับผิดชอบ'] || ''), accepted: ESV.toDate(r['เวลารับงาน']), closed: ESV.toDate(r['เวลาปิดงาน']),
+      duration: Number(r['ระยะเวลา (15นาที/หน่วย)']) || 0, files: String(r['ลิงก์ไฟล์ข้อมูล'] || ''), rating: Number(r['คะแนนความพึงพอใจ']) || 0,
+      feedback: String(r['ความคิดเห็นผู้รับบริการ'] || ''), area: String(r['พื้นที่รับผิดชอบ'] || ''),
+      fy: Number(r['ปีงบประมาณ']) || ESV.fiscalYear(d) };
+  };
+
+  function load(first) {
+    return Promise.all(['PublicConfig', 'PublicDepartments', 'PublicJobs', 'Votes'].map(ESV.sheetSafe)).then(([cfg, d, j, v]) => {
+      ESV.applyConfig(cfg); setQr();
+      DEPTS = d.sort((a, b) => (Number(a['ลำดับ']) || 999) - (Number(b['ลำดับ']) || 999));
+      JOBS = j.map(job).filter(x => x.no).sort((a, b) => (b.created || 0) - (a.created || 0));
+      VOTES = v.map(r => ({ score: Number(r['คะแนน']) || 0, dept: String(r['รหัสฝ่าย'] || '') })).filter(x => x.score);
+      if (first) fillFilters();
+      drawDash(); drawSat(); drawReg();
+      const t = new Date(); $('updTxt').textContent = 'อัปเดต ' + String(t.getHours()).padStart(2, '0') + ':' + String(t.getMinutes()).padStart(2, '0') + ':' + String(t.getSeconds()).padStart(2, '0');
+      $('loadErr').classList.add('hide');
+      if (first) { const q = new URLSearchParams(location.search).get('job'); if (q) openJob(q); }
+    }).catch(e => { $('loadErr').textContent = 'โหลดข้อมูลไม่สำเร็จ: ' + e.message; $('loadErr').classList.remove('hide'); $('updTxt').textContent = 'ออฟไลน์'; });
+  }
+  function fillFilters() {
+    const opts = DEPTS.map(d => '<option value="' + esc(d['รหัสฝ่าย']) + '">' + esc(d['ชื่อฝ่าย']) + '</option>').join('');
+    ['fDept', 'rDept', 'vDept'].forEach(id => { $(id).insertAdjacentHTML('beforeend', opts); });
+    const now = ESV.fiscalYear(new Date());
+    const fys = [...new Set(JOBS.map(j => j.fy).filter(Boolean).concat([now]))].sort((a, b) => b - a);
+    $('fFy').innerHTML = fys.map(y => '<option' + (y === now ? ' selected' : '') + '>' + y + '</option>').join('');
+  }
+
+  /* ── แดชบอร์ด ── */
+  const avg = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : NaN;
+  function drawDash() {
+    const dept = $('fDept').value, fy = Number($('fFy').value);
+    const inDept = JOBS.filter(j => !dept || j.dept === dept);
+    const js = inDept.filter(j => j.fy === fy && j.status !== 'ยกเลิก');
+    const wait = inDept.filter(j => j.status === 'รับเรื่องไว้ก่อน'), prog = inDept.filter(j => j.status === 'อยู่ระหว่างดำเนินการ');
+    const done = js.filter(j => j.status === 'สำเร็จ'), fail = js.filter(j => j.status === 'ไม่สำเร็จ');
+    const rate = done.length + fail.length ? Math.round(done.length * 1000 / (done.length + fail.length)) / 10 : NaN;
+    $('kTotal').textContent = js.length; $('kTotalS').textContent = 'ปีงบประมาณ ' + fy;
+    $('kWait').textContent = wait.length; $('kWaitS').textContent = wait.length ? 'รอนานสุด ' + ESV.fmtDur(Date.now() - Math.min(...wait.map(j => +j.created || Date.now()))) : 'ไม่มีงานรอ';
+    $('kProg').textContent = prog.length;
+    const late = inDept.filter(j => OPEN.includes(j.status) && j.created && Date.now() - j.created > 3 * 86400000).length;
+    $('kProgS').textContent = late ? '⚠ ค้างเกิน 3 วัน ' + late + ' งาน' : 'ไม่มีงานค้างนาน';
+    $('kRate').textContent = isFinite(rate) ? rate + '%' : '-'; $('kRateS').textContent = 'สำเร็จ ' + done.length + ' · ไม่สำเร็จ ' + fail.length;
+    $('mResp').textContent = ESV.fmtDur(avg(js.filter(j => j.accepted && j.created).map(j => j.accepted - j.created).filter(x => x >= 0)));
+    $('mClose').textContent = ESV.fmtDur(avg(done.filter(j => j.closed && j.created).map(j => j.closed - j.created).filter(x => x >= 0)));
+    const units = js.reduce((a, j) => a + j.duration, 0); $('mHours').textContent = (Math.round(units * 15 / 6) / 10) + ' ชม.';
+    const sc = js.filter(j => j.rating).map(j => j.rating).concat(VOTES.filter(v => !dept || v.dept === dept).map(v => v.score));
+    $('mSat').textContent = sc.length ? avg(sc).toFixed(2) + ' / 5' : '-';
+    $('dashSub').textContent = (dept ? (DEPTS.find(d => d['รหัสฝ่าย'] === dept) || {})['ชื่อฝ่าย'] : 'ทุกฝ่าย') + ' · ปีงบประมาณ ' + fy + ' · อัปเดตอัตโนมัติทุก 1 นาที';
+    const months = []; for (let i = 0; i < 12; i++) { const d = new Date(fy - 543 - 1, 9 + i, 1); months.push({ y: d.getFullYear(), m: d.getMonth(), n: 0, ok: 0 }); }
+    js.forEach(j => { const mm = j.date && months.find(x => x.y === j.date.getFullYear() && x.m === j.date.getMonth()); if (mm) { mm.n++; if (j.status === 'สำเร็จ') mm.ok++; } });
+    const max = Math.max(1, ...months.map(m => m.n));
+    $('bars').innerHTML = months.map(m => '<div class="bar" title="' + ESV.TH_M[m.m] + ': ' + m.n + ' คำขอ · สำเร็จ ' + m.ok + '"><em class="num">' + (m.n || '') + '</em><div class="stk" style="height:' + Math.round(m.n / max * 140) + 'px"><i style="height:' + (m.n ? Math.round(m.ok / m.n * 100) : 0) + '%"></i></div><span>' + ESV.TH_M[m.m] + '</span></div>').join('');
+    const rows = DEPTS.filter(d => !dept || d['รหัสฝ่าย'] === dept).map(d => {
+      const dj = JOBS.filter(j => j.dept === d['รหัสฝ่าย'] && j.fy === fy && j.status !== 'ยกเลิก'), ok = dj.filter(j => j.status === 'สำเร็จ'), cl = avg(ok.filter(j => j.closed && j.created).map(j => j.closed - j.created));
+      return '<tr><td>' + esc(d['ชื่อฝ่าย']) + '</td><td class="n num">' + dj.length + '</td><td class="n num">' + (dj.length ? Math.round(ok.length * 100 / dj.length) + '%' : '-') + '</td><td class="n">' + ESV.fmtDur(cl) + '</td></tr>';
+    });
+    $('deptTab').innerHTML = '<tr><th>ฝ่าย</th><th class="n">คำขอ</th><th class="n">สำเร็จ</th><th class="n">ปิดงานเฉลี่ย</th></tr>' + (rows.join('') || '<tr><td colspan="4" class="loading">ยังไม่มีข้อมูล</td></tr>');
+  }
+  ['fDept', 'fFy'].forEach(id => $(id).addEventListener('change', drawDash));
+
+  /* ── ความพึงพอใจ ── */
+  function drawSat() {
+    const sc = JOBS.filter(j => j.rating).map(j => j.rating).concat(VOTES.map(v => v.score));
+    if (!sc.length) return;
+    const a = avg(sc);
+    $('satAvg').textContent = a.toFixed(2); $('satStars').textContent = '★'.repeat(Math.round(a)) + '☆'.repeat(5 - Math.round(a));
+    $('satCnt').textContent = 'จากการประเมิน ' + sc.length + ' ครั้ง (คะแนนเต็ม 5)';
+    $('satDist').innerHTML = [5, 4, 3, 2, 1].map(s => { const n = sc.filter(x => x === s).length; return '<span>' + s + ' ★</span><span class="bg"><i style="width:' + Math.round(n * 100 / sc.length) + '%"></i></span><span class="num">' + n + '</span>'; }).join('');
+  }
+  $('vPick').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; score = +b.dataset.s; $('vPick').querySelectorAll('button').forEach(x => x.classList.toggle('on', +x.dataset.s <= score)); });
+  $('voteForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!score) { $('vMsg').textContent = 'กรุณาเลือกคะแนน 1–5 ดาว'; return; }
+    const b = $('vSend'); b.disabled = true; $('vMsg').textContent = 'กำลังส่ง…';
+    try { await ESV.post({ action: 'vote', score: score, comment: $('vCmt').value.trim(), dept: $('vDept').value, website: $('vWeb').value });
+      $('vMsg').textContent = '✓ ขอบคุณสำหรับการประเมิน'; VOTES.push({ score: score, dept: $('vDept').value }); drawSat(); drawDash();
+      score = 0; $('vPick').querySelectorAll('button').forEach(x => x.classList.remove('on')); $('vCmt').value = '';
+    } catch (ex) { $('vMsg').textContent = ex.message; } finally { b.disabled = false; }
+  });
+
+  /* ── ทะเบียนงาน ── */
+  function filtered() {
+    const q = $('rq').value.trim().toLowerCase(), st = $('rSt').value, dp = $('rDept').value;
+    return JOBS.filter(j => (!st || j.status === st) && (!dp || j.dept === dp) && (!q || [j.no, j.room, j.type, j.detail, j.area].join(' ').toLowerCase().includes(q)));
+  }
+  function drawReg() {
+    const list = filtered(), pages = Math.max(1, Math.ceil(list.length / PER));
+    page = Math.min(page, pages - 1);
+    const rows = list.slice(page * PER, page * PER + PER);
+    $('regTab').innerHTML = '<tr><th>เลขที่งาน</th><th>วันที่</th><th>งาน</th><th>ฝ่าย</th><th>สถานะ</th></tr>' + (rows.length ? rows.map(j =>
+      '<tr class="r" data-no="' + esc(j.no) + '" tabindex="0"><td><b>' + esc(j.no) + '</b></td><td class="num" style="white-space:nowrap">' + ESV.thDate(j.date) + '</td>' +
+      '<td>' + esc(j.type) + (j.room ? ' · ' + esc(j.room) : '') + (j.area ? ' <span class="dept">' + esc(j.area) + '</span>' : '') + '<br><small style="color:var(--faint)">' + esc(j.detail.slice(0, 90)) + '</small></td>' +
+      '<td><span class="dept">' + esc(j.dept) + '</span></td><td>' + ESV.stBadge(j.status) + '</td></tr>').join('')
+      : '<tr><td colspan="5" class="loading">ไม่พบรายการ</td></tr>');
+    $('pgInfo').textContent = list.length ? 'แสดง ' + (page * PER + 1) + '–' + Math.min(list.length, page * PER + PER) + ' จาก ' + list.length + ' รายการ' : '';
+    $('pgPrev').disabled = page === 0; $('pgNext').disabled = page >= pages - 1;
+  }
+  ['rq', 'rSt', 'rDept'].forEach(id => $(id).addEventListener(id === 'rq' ? 'input' : 'change', () => { page = 0; drawReg(); }));
+  $('pgPrev').addEventListener('click', () => { page--; drawReg(); });
+  $('pgNext').addEventListener('click', () => { page++; drawReg(); });
+  $('regTab').addEventListener('click', e => { const tr = e.target.closest('tr.r'); if (tr) openJob(tr.dataset.no); });
+  $('regTab').addEventListener('keydown', e => { const tr = e.target.closest('tr.r'); if (tr && e.key === 'Enter') openJob(tr.dataset.no); });
+
+  /* ── รายละเอียด + ไทม์ไลน์ ── */
+  function openJob(no) {
+    no = String(no || '').trim().toUpperCase();
+    const j = JOBS.find(x => x.no.toUpperCase() === no);
+    if (!j) { ESV.modal('ไม่พบเลขที่งาน', '<p>ไม่พบเลขที่งาน <b>' + esc(no) + '</b> — ตรวจสอบเลขที่งานในอีเมลอีกครั้ง หรือรอ 1–2 นาทีหลังส่งคำขอ</p>'); return; }
+    const closed = ['สำเร็จ', 'ไม่สำเร็จ', 'ยกเลิก'].includes(j.status);
+    const files = (j.files.match(/https?:\/\/\S+/g) || []);
+    ESV.modal(esc(j.no) + ' · ' + esc(j.type),
+      '<div style="margin-bottom:10px">' + ESV.stBadge(j.status) + ' <span class="dept">' + esc(j.deptName || j.dept) + '</span></div>' +
+      '<dl class="kv"><dt>วันที่ให้บริการ</dt><dd>' + ESV.thDate(j.date) + '</dd><dt>ห้อง/สถานที่</dt><dd>' + esc(j.room || '-') + '</dd>' +
+      (j.area ? '<dt>พื้นที่</dt><dd>' + esc(j.area) + '</dd>' : '') + '<dt>รายละเอียด</dt><dd>' + esc(j.detail || '-') + '</dd>' +
+      (j.assignee ? '<dt>ผู้รับผิดชอบ</dt><dd>' + esc(j.assignee) + '</dd>' : '') + '</dl>' +
+      '<ul class="tl">' +
+        '<li class="on"><b>รับเรื่อง</b><small>' + ESV.thStamp(j.created) + '</small></li>' +
+        '<li class="' + (j.accepted ? 'on' : '') + '"><b>เจ้าหน้าที่รับงาน</b><small>' + (j.accepted ? ESV.thStamp(j.accepted) + ' · ใช้เวลา ' + ESV.fmtDur(j.accepted - j.created) : 'รอเจ้าหน้าที่รับงาน') + '</small></li>' +
+        '<li class="' + (closed ? 'on' : '') + '"><b>ปิดงาน' + (closed ? ' · ' + esc(j.status) : '') + '</b><small>' + (j.closed ? ESV.thStamp(j.closed) + ' · รวม ' + ESV.fmtDur(j.closed - j.created) : 'ยังไม่ปิดงาน') + '</small></li>' +
+        '<li class="' + (j.rating ? 'on' : '') + '"><b>ประเมินความพึงพอใจ</b><small>' + (j.rating ? '★'.repeat(j.rating) + '☆'.repeat(5 - j.rating) + (j.feedback ? ' · ' + esc(j.feedback) : '') : 'ยังไม่ประเมิน') + '</small></li>' +
+      '</ul>' + (files.length ? '<div style="margin-top:6px"><b>หลักฐานการปฏิบัติงาน</b><br>' + files.map((u, i) => '<a href="' + esc(u) + '" target="_blank" rel="noopener">ไฟล์ ' + (i + 1) + '</a>').join(' · ') + '</div>' : ''));
+  }
+  $('trackGo').addEventListener('click', () => openJob($('trackIn').value));
+  $('trackIn').addEventListener('keydown', e => { if (e.key === 'Enter') openJob($('trackIn').value); });
+
+  load(true);
+  setInterval(() => { if (!document.hidden) load(false); }, 60000);
+})();
+</script>
+</body>
+</html>
