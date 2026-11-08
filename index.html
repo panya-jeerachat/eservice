@@ -341,7 +341,8 @@ dl.kv dt{color:#5B6E88;font-size:14px}dl.kv dd{margin:0;overflow-wrap:anywhere}
     $('syncBtn').innerHTML = '<span class="spin">🔄</span> <span class="t">กำลังซิงก์…</span>';
     return Promise.resolve().then(() => {
       if (!ESV.ready()) throw new Error('ยังไม่ได้ใส่ PUBLIC_SHEET_ID ในไฟล์ config.js ของเว็บนี้');
-      return Promise.all(['PublicConfig', 'PublicDepartments', 'PublicJobs', 'Votes'].map(ESV.sheetSafe));
+      // แท็บหลัก (ทะเบียนงาน) อ่านแบบรายงานข้อผิดพลาด เพื่อบอกสาเหตุได้ถูกจุด · แท็บรองพลาดได้
+      return Promise.all([ESV.sheetSafe('PublicConfig'), ESV.sheetSafe('PublicDepartments'), ESV.sheet('PublicJobs'), ESV.sheetSafe('Votes')]);
     }).then(([cfg, d, j, v]) => {
       ESV.applyConfig(cfg);
       DEPTS = d.sort((a, b) => (Number(a['ลำดับ']) || 999) - (Number(b['ลำดับ']) || 999));
@@ -351,7 +352,7 @@ dl.kv dt{color:#5B6E88;font-size:14px}dl.kv dd{margin:0;overflow-wrap:anywhere}
       drawAll();
       $('loadErr').classList.add('hide');
       if (firstLoad) { firstLoad = false; const q = new URLSearchParams(location.search).get('job'); if (q) { $('rq').value = q; drawReg(); openJob(q); } }
-    }).catch(e => { $('loadErr').innerHTML = 'โหลดข้อมูลไม่สำเร็จ: ' + esc(e.message) + (ESV.ready() ? ' — ตรวจว่าสเปรดชีตสาธารณะแชร์แบบ "ทุกคนที่มีลิงก์ดูได้"' : ' — ผู้ดูแลคัดลอก config.js จากหน้าตั้งค่าระบบ → การ์ด "หน้าสาธารณะ" มาวางในเว็บนี้') + ' (ปุ่มขอรับบริการและเข้าสู่ระบบเจ้าหน้าที่ยังใช้งานได้)'; $('loadErr').classList.remove('hide'); })
+    }).catch(e => { $('loadErr').innerHTML = '<b>ยังแสดงข้อมูลไม่ได้</b> · ' + esc(ESV.whyFail(e)) + '<br><small>รายละเอียด: ' + esc(e.message) + ' · ปุ่มขอรับบริการและเข้าสู่ระบบเจ้าหน้าที่ยังใช้งานได้</small>'; $('loadErr').classList.remove('hide'); $('regTab').innerHTML = '<tr><td class="loading">ยังโหลดทะเบียนงานไม่ได้</td></tr>'; })
       .finally(() => { loading = false; $('syncBtn').innerHTML = '🔄 <span class="t">ซิงก์ข้อมูล</span>'; nextAt = Date.now() + REFRESH_MS; tick(); });
   }
   function tick() {

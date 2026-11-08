@@ -133,7 +133,7 @@ mark{background:var(--gold-l);color:inherit;border-radius:3px}
   const byOrder = (a, b) => (Number(a['ลำดับ']) || 999) - (Number(b['ลำดับ']) || 999);
   Promise.resolve().then(() => {
     if (!ESV.ready()) throw new Error('แบบฟอร์มยังไม่พร้อม: ผู้ดูแลยังไม่ได้ใส่ PUBLIC_SHEET_ID ในไฟล์ config.js (คัดลอกได้จากหน้าตั้งค่าระบบ → การ์ด "หน้าสาธารณะ")');
-    return Promise.all(['PublicConfig', 'PublicDepartments', 'PublicTypes', 'PublicAreas'].map(ESV.sheetSafe));
+    return Promise.all([ESV.sheetSafe('PublicConfig'), ESV.sheetSafe('PublicDepartments'), ESV.sheet('PublicTypes'), ESV.sheetSafe('PublicAreas')]);
   }).then(([cfg, d, t, a]) => {
     const names = ESV.applyConfig(cfg);
     if (names.contactPhone) $('telLine').textContent = '📞 ' + names.contactPhone + (names.contactEmail ? ' · ' + names.contactEmail : '');
@@ -146,7 +146,7 @@ mark{background:var(--gold-l);color:inherit;border-radius:3px}
     }).join('');
     const pre = new URLSearchParams(location.search).get('type');
     if (pre && TYPES.some(x => x['รหัสประเภท'] === pre)) { sel.value = pre; onType(); }
-  }).catch(e => err(e.message));
+  }).catch(e => { err(ESV.ready() ? 'แบบฟอร์มยังไม่พร้อม: ' + ESV.whyFail(e) : e.message); $('fType').innerHTML = '<option value="">ยังโหลดประเภทบริการไม่ได้</option>'; });
 
   /* ── เลือกประเภท → รู้ฝ่าย → ถ้าฝ่ายมีพื้นที่รับผิดชอบ ให้เลือกพื้นที่ ── */
   function onType() {

@@ -8,6 +8,8 @@
 (function () {
   'use strict';
   const CFG = window.ESV_CONFIG || {};
+  /* URL รูปแบบองค์กร (/a/msu.ac.th/macros/s/… หรือ /a/macros/msu.ac.th/s/…) → /macros/s/…/exec ส่งข้อมูลได้โดยไม่ต้องล็อกอิน */
+  if (CFG.WEBAPP_URL) CFG.WEBAPP_URL = String(CFG.WEBAPP_URL).trim().replace(/\/a\/[^/]+\/macros\/s\//, '/macros/s/').replace(/\/a\/macros\/[^/]+\/s\//, '/macros/s/').replace(/\/macros\/u\/\d+\/s\//, '/macros/s/');
   const ESV = window.ESV = {};
   ESV.cfg = CFG;
   ESV.names = { appName: 'E-Service คณะวิศวกรรมศาสตร์', appShort: 'E-Service', faculty: 'คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม' };
@@ -24,10 +26,13 @@
       const s = document.createElement('script');
       let done = false;
       const end = (fn, arg) => { if (done) return; done = true; clearTimeout(timer); try { delete window[cb]; } catch (e) { window[cb] = undefined; } s.remove(); fn(arg); };
-      const timer = setTimeout(() => end(reject, new Error('โหลดข้อมูลไม่สำเร็จ (หมดเวลา)')), 15000);
+      const timer = setTimeout(() => end(reject, Object.assign(new Error('อ่านสเปรดชีตสาธารณะไม่ได้ (หมดเวลา)'), { share: true })), 15000);
       window[cb] = json => {
         try {
-          if (json.status === 'error') throw new Error((json.errors && json.errors[0] && json.errors[0].detailed_message) || 'อ่านข้อมูลไม่ได้');
+          if (json.status === 'error') {
+            const er = json.errors && json.errors[0] || {}, msg = String(er.detailed_message || er.message || er.reason || 'อ่านข้อมูลไม่ได้');
+            throw Object.assign(new Error(msg), { share: /access|denied|permission|sign/i.test(msg + (er.reason || '')), tab: /invalid sheet|sheet/i.test(msg) });
+          }
           const labels = json.table.cols.map(c => String(c.label || c.id || '').trim());
           const rows = (json.table.rows || []).map(r => {
             const o = {}, f = {};
@@ -38,7 +43,7 @@
           end(resolve, rows);
         } catch (e) { end(reject, e); }
       };
-      s.onerror = () => end(reject, new Error('โหลดข้อมูลไม่สำเร็จ'));
+      s.onerror = () => end(reject, Object.assign(new Error('อ่านสเปรดชีตสาธารณะไม่ได้'), { share: true }));
       s.src = 'https://docs.google.com/spreadsheets/d/' + CFG.PUBLIC_SHEET_ID + '/gviz/tq?tqx=out:json;responseHandler:' + cb +
         '&headers=1&sheet=' + encodeURIComponent(name) + '&_=' + Date.now();
       document.body.appendChild(s);
@@ -46,6 +51,12 @@
   };
   /* แท็บที่อาจยังไม่มี (เช่น สเปรดชีตเพิ่งสร้าง) → คืนรายการว่าง ไม่ให้ทั้งหน้าพัง */
   ESV.sheetSafe = name => ESV.sheet(name).catch(() => []);
+  /* คำอธิบายสาเหตุที่อ่านข้อมูลไม่ได้ + วิธีแก้ (ให้ผู้ดูแลแก้ถูกจุด) */
+  ESV.whyFail = function (e) {
+    if (!ESV.ready()) return 'ยังไม่ได้ใส่ PUBLIC_SHEET_ID ในไฟล์ config.js ของเว็บนี้ — ผู้ดูแลคัดลอก config.js จากหน้าตั้งค่าระบบ → การ์ด "หน้าสาธารณะ"';
+    if (e && e.tab) return 'สเปรดชีตสาธารณะยังไม่มีแท็บข้อมูลรุ่นใหม่ — ผู้ดูแลกด "ซ่อมให้อัตโนมัติ" ที่หน้าตั้งค่าระบบ → การ์ด "หน้าสาธารณะ"';
+    return 'อ่านสเปรดชีตสาธารณะไม่ได้ — ส่วนใหญ่เกิดจากสเปรดชีตยังไม่ได้แชร์แบบ "ทุกคนที่มีลิงก์ดูได้" ผู้ดูแลกด "ตรวจหน้าสาธารณะ" / "ซ่อมให้อัตโนมัติ" ที่หน้าตั้งค่าระบบ';
+  };
 
   /* ── วันที่จากชีท: Date(2026,10,5,14,30,0) หรือ "5/11/2026, 14:30:00" หรือ "5/11/2026" → Date ── */
   ESV.toDate = function (v) {
