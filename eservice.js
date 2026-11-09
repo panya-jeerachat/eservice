@@ -140,6 +140,19 @@
   };
   document.addEventListener('DOMContentLoaded', ESV.credit);
 
+  /* ── โลโก้คณะ: logo.png ในโฟลเดอร์เดียวกัน → สำรองจาก eng.msu.ac.th/eservice/logo.png → ไอคอนแทน ── */
+  ESV.LOGO_FALLBACK = CFG.LOGO_URL || 'https://eng.msu.ac.th/eservice/logo.png';
+  document.addEventListener('error', ev => {
+    const im = ev.target;
+    if (!im || im.tagName !== 'IMG' || !im.classList.contains('logo')) return;
+    if (!im.dataset.fb) { im.dataset.fb = '1'; im.src = ESV.LOGO_FALLBACK; return; }
+    im.replaceWith(document.createTextNode('🏛️'));
+  }, true);
+  document.addEventListener('DOMContentLoaded', () => {
+    const ico = document.querySelector('link[rel="icon"]'); if (!ico) return;
+    const t = new Image(); t.onerror = () => { ico.href = ESV.LOGO_FALLBACK; }; t.src = ico.href;   // favicon สำรอง
+  });
+
   /* ── หน้าต่าง ── */
   ESV.modal = function (title, html) {
     const m = document.createElement('div');

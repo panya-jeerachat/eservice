@@ -8,13 +8,16 @@
 <!-- ฟอนต์ประจำมหาวิทยาลัย "มอน้ำชี" จากเซิร์ฟเวอร์คณะ (ไฟล์เดียวกับระบบ DWMS) -->
 <link rel="preconnect" href="https://eng.msu.ac.th" crossorigin>
 <link rel="stylesheet" href="https://eng.msu.ac.th/dwms/fonts/mornamchi.css">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
 <link rel="stylesheet" href="eservice.css">
 <style>
 body{background:linear-gradient(180deg,var(--maroon-l) 0%,var(--bg) 300px)}
 .page{max-width:620px;margin:0 auto;padding:28px 16px 0}
 .head{text-align:center;margin-bottom:18px}
-.logo{width:68px;height:68px;border-radius:18px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:32px;color:#fff;
-  background:linear-gradient(135deg,var(--maroon),var(--maroon-d));box-shadow:0 10px 24px color-mix(in srgb,var(--maroon) 35%,transparent)}
+.head .logo{width:84px;height:84px;border-radius:20px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:34px;color:var(--maroon);
+  background:#fff;padding:6px;box-shadow:0 10px 24px color-mix(in srgb,var(--maroon) 25%,transparent)}
+.head .logo img{width:100%;height:100%;object-fit:contain}
 .head h1{font-size:24px;color:var(--maroon)}
 .head .sys{font-size:15px;color:var(--muted);margin-top:4px}
 .head .tel{font-size:13.5px;color:var(--faint);margin-top:6px}
@@ -46,7 +49,7 @@ mark{background:var(--gold-l);color:inherit;border-radius:3px}
 <body data-title="แบบฟอร์มขอรับบริการ">
 <div class="page">
   <div class="head">
-    <div class="logo" aria-hidden="true">🛠️</div>
+    <div class="logo"><img class="logo" src="logo.png" alt="ตราคณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม"></div>
     <h1>แบบฟอร์มขอรับบริการ</h1>
     <div class="sys"><span data-cfg="appName">E-Service คณะวิศวกรรมศาสตร์</span> · <span data-cfg="faculty">คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม</span></div>
     <div class="tel" id="telLine"></div>
